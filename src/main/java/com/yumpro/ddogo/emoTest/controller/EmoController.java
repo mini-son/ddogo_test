@@ -1,6 +1,7 @@
 package com.yumpro.ddogo.emoTest.controller;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.OutputStream;
@@ -8,9 +9,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @RequestMapping("/emo")
+@Controller
 public class EmoController {
 
-    @RequestMapping(value="/test")
+    @RequestMapping("/result")
     //http://localhost/im
     public static String imotion() {
         try {

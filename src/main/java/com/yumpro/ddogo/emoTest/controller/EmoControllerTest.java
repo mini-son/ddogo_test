@@ -1,5 +1,6 @@
 package com.yumpro.ddogo.emoTest.controller;
 
+import com.yumpro.ddogo.emoTest.entity.Emoreview;
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ public class EmoControllerTest {
 
     @RequestMapping(value="/im")
     //http://localhost/im
-    public static String imotion() {
+    public static String imotion(Emoreview emoreview) {
         try {
             // API 엔드포인트 URL
             String url = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
@@ -25,7 +26,7 @@ public class EmoControllerTest {
 
             // 요청 데이터 생성
             JSONObject data = new JSONObject();
-            data.put("content", "튀기지 않은 치킨이 너무 맛있었어요 반반으로 시켰더니 단짠단짠으로 정말 맛있게 먹었습니다 그런데 좀 비싸긴 한거같아요");
+            data.put("content", emoreview.getReview());
 
             // POST 요청 설정
             URL apiUrl = new URL(url);

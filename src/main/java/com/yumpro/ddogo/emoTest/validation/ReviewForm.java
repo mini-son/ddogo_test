@@ -18,8 +18,5 @@ public class ReviewForm {
     @NotNull
     private int map_no;
 
-    @NotNull
-    private double emo_result;
-
 
 }

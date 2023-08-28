@@ -1,5 +1,6 @@
 package com.yumpro.ddogo.emoTest.controller;
 
+import com.yumpro.ddogo.emoTest.entity.Emoreview;
 import com.yumpro.ddogo.emoTest.service.ReviewService;
 import com.yumpro.ddogo.emoTest.validation.ReviewForm;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class ReviewController {
         if (bindingResult.hasErrors()) { //에러가 존재하면
             return "emo/emoReviewForm";  //emoreview.html문서로 이동
         }
-        reviewService.add(reviewForm.getReview(), reviewForm.getHotplace_no(), reviewForm.getMap_no(), reviewForm.getEmo_result());
+        reviewService.add(reviewForm.getReview(), reviewForm.getHotplace_no(), reviewForm.getMap_no());
         return "emo/emoReviewForm";
     }
 }

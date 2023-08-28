@@ -1,6 +1,8 @@
 <html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
 <div class="container my-3">
 test
+</div>
 <table class="table">
     <thead class="table-dark">
         <tr>
@@ -9,11 +11,11 @@ test
     </thead>
     <tbody>
         <tr>
-            <td th:text="${result}" class="form-control"></td>
+            <td th:text="${emo_result}" class="form-control"></td>
         </tr>
     </tbody>
 </table>
 th:text="${result}"
 ${result}
-</body>
 </div>
+</html>

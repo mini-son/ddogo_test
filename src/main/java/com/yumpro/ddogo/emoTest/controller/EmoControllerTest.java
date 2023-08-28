@@ -1,4 +1,4 @@
-package com.yumpro.ddogo.emo;
+package com.yumpro.ddogo.emoTest.controller;
 
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -66,14 +66,14 @@ public class EmoControllerTest {
                 float negativeConfidence = (float) confidence.getDouble("negative");
                 float neutralConfidence = (float) confidence.getDouble("neutral");
                 float positiveConfidence = (float) confidence.getDouble("positive");
-                double result = Math.round(positiveConfidence * 100) / 100.0;
+                double emo_result = Math.round(positiveConfidence * 100) / 100.0;
 
                 // Printing extracted data
                 System.out.println("Document Sentiment: " + sentiment);
                 System.out.println("Negative Confidence: " + negativeConfidence);
                 System.out.println("Neutral Confidence: " + neutralConfidence);
                 System.out.println("Positive Confidence: " + positiveConfidence);
-                System.out.println("결과=" + result);
+                System.out.println("결과=" + emo_result);
 
             } else {
                 System.out.println("요청 실패 - 상태 코드: " + responseCode);
@@ -93,6 +93,6 @@ public class EmoControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "emo/test2";
+        return "emo/test";
     }
 }

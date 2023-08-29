@@ -1,4 +1,4 @@
-package com.yumpro.ddogo.emoTest.entity;
+package com.yumpro.ddogo.main.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,8 +1,7 @@
-package com.yumpro.ddogo.emoTest.service;
+package com.yumpro.ddogo.emoAnal.service;
 
-import com.yumpro.ddogo.emoTest.entity.Emoreview;
-import com.yumpro.ddogo.emoTest.repository.EmoRepository;
-import com.yumpro.ddogo.emoTest.repository.ReviewRepository;
+import com.yumpro.ddogo.emoAnal.entity.Emoreview;
+import com.yumpro.ddogo.emoAnal.repository.EmoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,14 @@ public class EmoService {
         emoreview.setHotplace_no(hotplace_no);
         emoreview.setMap_no(map_no);
         emoreview.setEmo_result(emo_result);
+        emoRepository.save(emoreview);
+    }
+
+    public void add(String reveiw,int hotplace_no,int map_no){
+        Emoreview emoreview = new Emoreview();
+        emoreview.setReview(reveiw);
+        emoreview.setHotplace_no(hotplace_no);
+        emoreview.setMap_no(map_no);
         emoRepository.save(emoreview);
     }
 }

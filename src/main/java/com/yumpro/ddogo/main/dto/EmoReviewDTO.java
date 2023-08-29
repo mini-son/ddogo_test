@@ -1,4 +1,4 @@
-package com.yumpro.ddogo.emoTest.DTO;
+package com.yumpro.ddogo.main.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class EmoreviewDTO {
+public class EmoReviewDTO {
 
     private int review_no;
     private String review;

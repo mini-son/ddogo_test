@@ -1,4 +1,4 @@
-package com.yumpro.ddogo.emoTest.validation;
+package com.yumpro.ddogo.emoAnal.validation;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

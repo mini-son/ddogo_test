@@ -5,9 +5,9 @@
             <h4>리뷰</h4>
         </div>
     </div>
-    <form th:action="@{/reviewadd}" th:object="${reviewForm}" method="post">
+    <form th:action="@{/emo/reviewadd}" th:object="${reviewForm}" method="post">
         <!--유효성검사시 에러메세지 출력영역-->
-        <div th:replace="~{emo/form_errors::formErrorsFragment}"></div>
+        <div th:replace="~{emoAnal/form_errors::formErrorsFragment}"></div>
         <div class="mb-3">
             <label for="review" class="form-label">리뷰</label>
             <input type="text" th:field="*{review}" class="form-control"/>

@@ -3,6 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias alias="emoreviewDTO" type="com.mycom.yumpro.ddogo.emoTest.DTO.emoreviewDTO"/>
+        <typeAlias alias="MymapDTO" type="com.mycom.yumpro.ddogo.main.dto.MymapDTO"/>
     </typeAliases>
 </configuration>

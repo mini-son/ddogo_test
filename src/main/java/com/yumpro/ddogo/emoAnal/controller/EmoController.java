@@ -1,20 +1,39 @@
-package com.yumpro.ddogo.emoTest.controller;
+package com.yumpro.ddogo.emoAnal.controller;
 
+import com.yumpro.ddogo.emoAnal.entity.Emoreview;
+import com.yumpro.ddogo.emoAnal.service.EmoService;
+import com.yumpro.ddogo.emoAnal.validation.ReviewForm;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@SpringBootApplication
+@RequiredArgsConstructor
 @RequestMapping("/emo")
 @Controller
 public class EmoController {
 
-    @RequestMapping("/result")
-    //http://localhost/im
-    public static String imotion() {
+    private final EmoService emoService;
+
+    @GetMapping("/reviewadd")
+    public String add(ReviewForm ReviewForm) {
+        return "emoAnal/emoReviewForm";
+    }
+
+    @PostMapping("/reviewadd")
+    public String emoreview(@Valid ReviewForm reviewForm, BindingResult bindingResult, Emoreview emoreview) {
+
+        double emo_result = 0;
         try {
             // API 엔드포인트 URL
             String url = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
@@ -25,7 +44,7 @@ public class EmoController {
 
             // 요청 데이터 생성
             JSONObject data = new JSONObject();
-            data.put("content", "튀기지 않은 치킨이 너무 맛있었어요 반반으로 시켰더니 단짠단짠으로 정말 맛있게 먹었습니다 그런데 좀 비싸긴 한거같아요");
+            data.put("content", reviewForm.getReview());
 
             // POST 요청 설정
             URL apiUrl = new URL(url);
@@ -66,14 +85,14 @@ public class EmoController {
                 float negativeConfidence = (float) confidence.getDouble("negative");
                 float neutralConfidence = (float) confidence.getDouble("neutral");
                 float positiveConfidence = (float) confidence.getDouble("positive");
-                double result = Math.round(positiveConfidence * 100) / 100.0;
+                emo_result = Math.round(positiveConfidence * 100) / 100.0; //소수점 둘째자리까지 보여줌.
 
                 // Printing extracted data
                 System.out.println("Document Sentiment: " + sentiment);
                 System.out.println("Negative Confidence: " + negativeConfidence);
                 System.out.println("Neutral Confidence: " + neutralConfidence);
                 System.out.println("Positive Confidence: " + positiveConfidence);
-                System.out.println("결과=" + result);
+                System.out.println("결과=" + emo_result);
 
             } else {
                 System.out.println("요청 실패 - 상태 코드: " + responseCode);
@@ -93,6 +112,13 @@ public class EmoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "emo/test";
+
+        if (bindingResult.hasErrors()) { //에러가 존재하면
+            return "emoAnal/emoReviewForm";  //emoReviewForm.html문서로 이동
+        }
+
+        emoService.updateReview(reviewForm.getReview(), reviewForm.getHotplace_no(), reviewForm.getMap_no(), emo_result);
+        return "emoAnal/imsi"; //리뷰등록 성공하면
     }
+
 }

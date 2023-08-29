@@ -5,20 +5,20 @@
             <h4>리뷰</h4>
         </div>
     </div>
-    <form th:action="@{/review/add}" th:object="${reviewForm}" method="post">
+    <form th:action="@{/reviewadd}" th:object="${reviewForm}" method="post">
         <!--유효성검사시 에러메세지 출력영역-->
-        <div th:replace="~{form_errors::formErrorsFragment}"></div>
+        <div th:replace="~{emo/form_errors::formErrorsFragment}"></div>
         <div class="mb-3">
             <label for="review" class="form-label">리뷰</label>
             <input type="text" th:field="*{review}" class="form-control"/>
         </div>
         <div class="mb-3">
             <label for="hotplace_no" class="form-label">hotplace_no</label>
-            <input type="text" th:field="*{hotplace_no}" class="form-control"/>
+            <input type="number" th:field="*{hotplace_no}" class="form-control"/>
         </div>
         <div class="mb-3">
             <label for="map_no" class="form-label">map_no</label>
-            <input type="text" th:field="*{map_no}" class="form-control"/>
+            <input type="number" th:field="*{map_no}" class="form-control"/>
         </div>
 <!--        <div class="mb-3">
             <label for="emo_result" class="form-label">emo_result</label>

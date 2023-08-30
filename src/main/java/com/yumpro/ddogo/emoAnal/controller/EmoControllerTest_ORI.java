@@ -1,40 +1,20 @@
-package com.yumpro.ddogo.emoAnal.service;
+package com.yumpro.ddogo.emoAnal.controller;
 
-import com.yumpro.ddogo.emoAnal.entity.Emoreview;
-import com.yumpro.ddogo.emoAnal.repository.EmoRepository;
-import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+@SpringBootApplication
+@Controller
+public class EmoControllerTest_ORI {
 
-@Service
-@RequiredArgsConstructor
-public class EmoService {
-
-    private final EmoRepository emoRepository;
-
-    public void updateReview(String reveiw,int hotplace_no,int map_no,double emo_result){
-        Emoreview emoreview = new Emoreview();
-        emoreview.setReview(reveiw);
-        emoreview.setHotplace_no(hotplace_no);
-        emoreview.setMap_no(map_no);
-        emoreview.setEmo_result(emo_result);
-        emoRepository.save(emoreview);
-    }
-
-    public void add(String reveiw,int hotplace_no,int map_no){
-        Emoreview emoreview = new Emoreview();
-        emoreview.setReview(reveiw);
-        emoreview.setHotplace_no(hotplace_no);
-        emoreview.setMap_no(map_no);
-        emoRepository.save(emoreview);
-    }
-
-    public double emo(Emoreview emoreview){
-        double emo_result = 0;
+    @RequestMapping(value="/im")
+    //http://localhost/im
+    public static String imotion() {
         try {
             // API 엔드포인트 URL
             String url = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
@@ -45,7 +25,7 @@ public class EmoService {
 
             // 요청 데이터 생성
             JSONObject data = new JSONObject();
-            data.put("content", emoreview);
+            data.put("content", "튀기지 않은 치킨이 너무 맛있었어요 반반으로 시켰더니 단짠단짠으로 정말 맛있게 먹었습니다 그런데 좀 비싸긴 한거같아요");
 
             // POST 요청 설정
             URL apiUrl = new URL(url);
@@ -86,7 +66,7 @@ public class EmoService {
                 float negativeConfidence = (float) confidence.getDouble("negative");
                 float neutralConfidence = (float) confidence.getDouble("neutral");
                 float positiveConfidence = (float) confidence.getDouble("positive");
-                emo_result = Math.round(positiveConfidence * 100) / 100.0; //소수점 둘째자리까지 보여줌.
+                double emo_result = Math.round(positiveConfidence * 100) / 100.0;
 
                 // Printing extracted data
                 System.out.println("Document Sentiment: " + sentiment);
@@ -113,8 +93,6 @@ public class EmoService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return emo_result;
+        return "emo/test";
     }
-
-
 }

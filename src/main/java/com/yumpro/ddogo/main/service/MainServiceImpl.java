@@ -11,6 +11,8 @@ public class MainServiceImpl implements MainService{
 
     @Override
     public int mapno() throws Exception{
-        return
+        int mapno = mainRepository.mapno();
+        return mapno;
     }
+
 }

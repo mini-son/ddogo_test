@@ -1,40 +1,45 @@
-package com.yumpro.ddogo.emoAnal.service;
+package com.yumpro.ddogo.emoAnal.controller;
 
 import com.yumpro.ddogo.emoAnal.entity.Emoreview;
-import com.yumpro.ddogo.emoAnal.repository.EmoRepository;
+import com.yumpro.ddogo.emoAnal.service.EmoService;
+import com.yumpro.ddogo.emoAnal.validation.ReviewForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-@Service
 @RequiredArgsConstructor
-public class EmoService {
+@SpringBootApplication
+@Controller
+public class EmoControllerTest {
 
-    private final EmoRepository emoRepository;
-
-    public void updateReview(String reveiw,int hotplace_no,int map_no,double emo_result){
-        Emoreview emoreview = new Emoreview();
-        emoreview.setReview(reveiw);
-        emoreview.setHotplace_no(hotplace_no);
-        emoreview.setMap_no(map_no);
-        emoreview.setEmo_result(emo_result);
-        emoRepository.save(emoreview);
+    private final EmoService emoService;
+    @GetMapping("/reviewadd")
+    public String add(ReviewForm ReviewForm) {
+        return "emoAnal/emoReviewForm";
     }
 
-    public void add(String reveiw,int hotplace_no,int map_no){
-        Emoreview emoreview = new Emoreview();
-        emoreview.setReview(reveiw);
-        emoreview.setHotplace_no(hotplace_no);
-        emoreview.setMap_no(map_no);
-        emoRepository.save(emoreview);
+    @PostMapping("/reviewadd")
+    public String emoreview(@Valid ReviewForm reviewForm, BindingResult bindingResult, Emoreview emoreview) {
+        //emo_result
+        //emoService.updateReview(reviewForm.getReview(), reviewForm.getHotplace_no(), reviewForm.getMap_no(), emo_result);
+        return "emoAnal/imsi"; //리뷰등록 성공하면
     }
 
-    public double emo(Emoreview emoreview){
-        double emo_result = 0;
+
+    @RequestMapping(value="/imtest")
+    //http://localhost/im
+    public static String imotion() {
+        //1.파라미터받기
+        String emoreview = "튀기지 않은 치킨이 너무 맛있었어요 반반으로 시켰더니 단짠단짠으로 정말 맛있게 먹었습니다 그런데 좀 비싸긴 한거같아요";
         try {
             // API 엔드포인트 URL
             String url = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
@@ -86,7 +91,7 @@ public class EmoService {
                 float negativeConfidence = (float) confidence.getDouble("negative");
                 float neutralConfidence = (float) confidence.getDouble("neutral");
                 float positiveConfidence = (float) confidence.getDouble("positive");
-                emo_result = Math.round(positiveConfidence * 100) / 100.0; //소수점 둘째자리까지 보여줌.
+                double emo_result = Math.round(positiveConfidence * 100) / 100.0;
 
                 // Printing extracted data
                 System.out.println("Document Sentiment: " + sentiment);
@@ -113,8 +118,6 @@ public class EmoService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return emo_result;
+        return "emoAnal/test";
     }
-
-
 }

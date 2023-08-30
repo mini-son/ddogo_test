@@ -1,4 +1,4 @@
-package com.yumpro.ddogo.main.entity;
+/*package com.yumpro.ddogo.main.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,4 +23,4 @@ public class Emoreview {
 
     @Column
     private double emo_result;
-}
+}*/

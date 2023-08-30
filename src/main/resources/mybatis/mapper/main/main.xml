@@ -6,7 +6,7 @@
         <![CDATA[
 		select map_no
         from mymap
-        where map_no=1
+        where map_no=2
 		]]>
     </select>
 </mapper>

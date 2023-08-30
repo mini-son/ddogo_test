@@ -17,7 +17,7 @@ public class MainController {
 
         int mapno = mainService.mapno();
 
-        System.out.println("mapno"+mapno);
+        System.out.println("mapno="+mapno);
         return mapno;
     }
 

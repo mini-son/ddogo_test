@@ -2,6 +2,8 @@ package com.yumpro.ddogo.emoAnal.service;
 
 import com.yumpro.ddogo.emoAnal.entity.Emoreview;
 import com.yumpro.ddogo.emoAnal.repository.EmoRepository;
+import com.yumpro.ddogo.emoAnal.validation.ReviewForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class EmoService {
 
     private final EmoRepository emoRepository;
 
+    //리뷰등록(임시)
     public void updateReview(String reveiw,int hotplace_no,int map_no,double emo_result){
         Emoreview emoreview = new Emoreview();
         emoreview.setReview(reveiw);
@@ -25,15 +28,8 @@ public class EmoService {
         emoRepository.save(emoreview);
     }
 
-    public void add(String reveiw,int hotplace_no,int map_no){
-        Emoreview emoreview = new Emoreview();
-        emoreview.setReview(reveiw);
-        emoreview.setHotplace_no(hotplace_no);
-        emoreview.setMap_no(map_no);
-        emoRepository.save(emoreview);
-    }
-
-    public double emo(Emoreview emoreview){
+    //감정분석
+    public double emoAnal(String reveiw){
         double emo_result = 0;
         try {
             // API 엔드포인트 URL
@@ -45,7 +41,7 @@ public class EmoService {
 
             // 요청 데이터 생성
             JSONObject data = new JSONObject();
-            data.put("content", emoreview);
+            data.put("content",reveiw);
 
             // POST 요청 설정
             URL apiUrl = new URL(url);
@@ -115,6 +111,5 @@ public class EmoService {
         }
         return emo_result;
     }
-
 
 }

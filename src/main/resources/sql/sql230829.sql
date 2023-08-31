@@ -62,7 +62,7 @@ from mymap
 where timestampdiff(day,recom_date,now())=0;
 
 -- 오늘 찜수가 많은 순서대로,hotplace.hotplace_name 뿌려주기*******★★★★★
-select h.hotplace_name, count(m.map_no) AS jjim
+select h.hotplace_name, count(m.map_no) as jjim
 from hotplace h
 left join mymap m on h.hotplace_no = m.hotplace_no
 where timestampdiff(day, m.recom_date, now()) = 0
@@ -70,6 +70,17 @@ where timestampdiff(day, m.recom_date, now()) = 0
   and h.hotplace_cate_no = 1
 group by h.hotplace_name
 order by jjim desc limit 3;
+
+-- ★★★★★
+select h.hotplace_name, h.hotplace_no,count(m.map_no) as jjim
+from hotplace h
+left join mymap m on h.hotplace_no = m.hotplace_no
+where timestampdiff(day, m.recom_date, now()) = 0
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 1
+group by h.hotplace_name, h.hotplace_no
+order by jjim desc limit 3;
+
 
 
 select distinct h.hotplace_name
@@ -150,7 +161,6 @@ select avg(emoreview.emo_result)
 from emoreview
 where hotplace_no=1;
 
-select count(hotplace_no) from ddogo.mymap where recom='Y' and hotplace_no=2;
 
 
 select *
@@ -167,28 +177,34 @@ select *
 from mymap
 where timestampdiff(month,recom_date ,now())<1;
 
-select map_no
-from mymap
-where map_no=1;
-
-select map_no
-        from mymap
-        where map_no=2;
 
 select hotplace_no
 from hotplace
 where hotplace_no in (select hotplace_no from mymap where recom='Y' group by hotplace_no order by count(recom) desc);
 
-INSERT INTO mymap (map_no, hotplace_no, user_no, recom, map_memo, recom_date)
-VALUES (1, 2, 3, 'Some Recommendation', 'Some Memo', NOW());
-
-INSERT INTO emorview (map_no, hotplace_no, review, emo_result)
-VALUES (LAST_INSERT_ID(), 2, 'Some Review Text', 0.85);
 
 insert all
 into mymap values(hotplace_no=3,user_no=95,recom='Y',recom_date=NOW())
 into emoreview values(review='또가고싶어요',emo_result=95)
 select *
 from dual;
+
+-- hotplace의 정보와 해당 hotplace에 대한 추천 수 및 감정 결과의 평균을 계산하고 그룹화한 결과를 반환
+ SELECT
+MAX(hp.hotplace_no) AS hotplace_no,
+hp.sido,hp.gugun,hp.hotplace_name,hc.hotplace_cate_name,
+SUM(CASE WHEN mm.recom = 'Y' THEN 1 ELSE 0 END) AS recom_count,
+AVG(COALESCE(er.emo_result, 0)) AS emo_result
+FROM
+hotplace hp
+JOIN
+hotplace_cate hc ON hp.hotplace_cate_no = hc.hotplace_cate_no
+LEFT JOIN
+mymap mm ON hp.hotplace_no = mm.hotplace_no
+LEFT JOIN
+emoreview er ON mm.map_no = er.map_no AND mm.hotplace_no = er.hotplace_no
+GROUP BY
+hp.sido, hp.gugun, hp.hotplace_name, hc.hotplace_cate_name;
+
 
 

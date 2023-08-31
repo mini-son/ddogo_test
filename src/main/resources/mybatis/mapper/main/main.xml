@@ -14,13 +14,13 @@
     <!--오늘 전국 베스트 찜(음식점)-->
     <select id="allBestEatJjim" resultType="map">
         <![CDATA[
-        select h.hotplace_name, count(m.map_no) as jjim
+        select h.hotplace_name, h.hotplace_no, count(m.map_no) as jjim
         from hotplace h
         left join mymap m on h.hotplace_no = m.hotplace_no
         where timestampdiff(day, m.recom_date, now()) = 0
           and m.recom = 'Y'
           and h.hotplace_cate_no = 1
-        group by h.hotplace_name
+        group by h.hotplace_name, h.hotplace_no
         order by jjim desc limit 3;
 		]]>
     </select>
@@ -28,14 +28,51 @@
     <!--오늘 전국 베스트 찜(카페)-->
     <select id="allBestCafeJjim" resultType="map">
         <![CDATA[
-        select h.hotplace_name, count(m.map_no) as jjim
+        select h.hotplace_name, h.hotplace_no, count(m.map_no) as jjim
         from hotplace h
         left join mymap m on h.hotplace_no = m.hotplace_no
         where timestampdiff(day, m.recom_date, now()) = 0
           and m.recom = 'Y'
           and h.hotplace_cate_no = 2
-        group by h.hotplace_name
+        group by h.hotplace_name, h.hotplace_no
         order by jjim desc limit 3;
 		]]>
     </select>
+
+    <!-- hotplace_no로 감정분석결과평균 불러오기 -->
+    <select id="emoAnalAvg" resultType="double" parameterType="int">
+        <![CDATA[
+        select avg(emoreview.emo_result)
+        from emoreview
+        where hotplace_no=#{hotplace_no}
+		]]>
+    </select>
+
+    <!--오늘 전국 베스트 찜(음식점)2-->
+    <select id="allBestEatJjim2" resultType="map">
+        <![CDATA[
+        select
+            h.hotplace_name,
+            h.hotplace_no,
+            COUNT(m.map_no) as jjim,
+            avg(er.emo_result) as avg_emo_result
+        from
+            hotplace h
+        left join
+            mymap m on h.hotplace_no = m.hotplace_no
+        left join
+            emoreview er on h.hotplace_no = er.hotplace_no
+        where
+            timestampdiff(day, m.recom_date, now()) = 0
+            and m.recom = 'Y'
+            and h.hotplace_cate_no = 1
+        group by
+            h.hotplace_name, h.hotplace_no
+        order by
+            jjim desc
+        limit 3;
+		]]>
+    </select>
+
+
 </mapper>

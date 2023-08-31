@@ -24,4 +24,9 @@ public class MainServiceImpl implements MainService{
         return eatjjimList;
     }
 
+    public List cafejjim(HashMap map) throws Exception{
+        List cafejimList = mainRepository.cafejjim(map);
+        return cafejimList;
+    }
+
 }

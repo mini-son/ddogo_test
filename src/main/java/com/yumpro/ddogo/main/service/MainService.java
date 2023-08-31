@@ -9,4 +9,5 @@ public interface MainService {
 
     public List eatjjim(HashMap map) throws Exception;
 
+    public List cafejjim(HashMap map) throws Exception;
 }

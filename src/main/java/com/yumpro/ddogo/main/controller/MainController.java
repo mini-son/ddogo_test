@@ -29,8 +29,11 @@ public class MainController {
     @RequestMapping("allBestEatJjim")
     public String allBestJjim(Model model, @RequestParam HashMap map) throws Exception {
         List eatjjim = mainService.eatjjim(map);
+        List cafejjim = mainService.cafejjim(map);
         System.out.println("eatjjim="+eatjjim);
+        System.out.println("cafejjim"+cafejjim);
         model.addAttribute("eatjjim",eatjjim);
+        model.addAttribute("cafejjim",cafejjim);
         return "main/test2";
     }
 

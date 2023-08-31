@@ -41,14 +41,44 @@ where review_no='3';
 -- 이번달 강남구 맛집 3개(원본.변경해야함)
 select distinct h.hotplace_name
 from ddogo.hotplace h, ddogo.mymap m
-where timestampdiff(month,m.recom_date ,now()) <=1 and h.gugun="강남구" and h.hotplace_cate_no=1
+where timestampdiff(month,m.recom_date ,now()) <=0 and h.gugun="강남구" and h.hotplace_cate_no=1
 order by (select count(map_no) from ddogo.mymap where recom='Y') desc limit 10;
 
 select hotplace_name from ddogo.mymap where recom='Y';
 
--- 이번달 찜수가 많은 
+-- 찜수가 많은 순서대로
 select hotplace_no, count(map_no) jjim from ddogo.mymap where recom='y' group by hotplace_no order by jjim desc limit 10;
 select hotplace_no from mymap where recom='y' group by hotplace_no order by count(map_no) desc limit 10;
+
+-- 이번달 찜수가 많은 순서대로
+select hotplace_no, count(map_no) jjim 
+from ddogo.mymap where recom='y' and timestampdiff(month,recom_date ,now()) <=1
+group by hotplace_no order by jjim 
+desc limit 10;
+
+-- 오늘 찜수가 많은 순서대로
+select distinct map_no,hotplace_no
+from mymap
+where timestampdiff(day,recom_date,now())=0;
+
+-- 오늘 찜수가 많은 순서대로,hotplace.hotplace_name 뿌려주기*******★★★★★
+select h.hotplace_name, count(m.map_no) AS jjim
+from hotplace h
+left join mymap m on h.hotplace_no = m.hotplace_no
+where timestampdiff(day, m.recom_date, now()) = 0
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 1
+group by h.hotplace_name
+order by jjim desc limit 3;
+
+
+select distinct h.hotplace_name
+from ddogo.hotplace h, ddogo.mymap m
+where timestampdiff(month,m.recom_date ,now()) <=0 and m.recom='Y' and h.hotplace_cate_no=1
+order by (select count(map_no) from ddogo.mymap where recom='Y') desc limit 10;
+
+
+select count(map_no) from mymap where recom='Y';
 
 -- 이번달 강남구 맛집 3개
 select distinct h.hotplace_name
@@ -72,7 +102,7 @@ on e.map_no=m.map_no
 where m.recom='Y';
 
 -- 또갈 3개 맵 조인(hotplace,mymap,emoreview)
-select distinct h.hotplace_no,h.sido,h.gugun,m.hotplace_no,m.recom,m.recom_date,h.hotplace_cate_no
+select distinct h.hotplace_no,h.hotplace_cate_no,h.sido,h.gugun,m.recom,m.recom_date,e.review,e.emo_result
 from hotplace h left join mymap m
 on h.hotplace_no=m.hotplace_no left join emoreview e
 on e.map_no=m.map_no;
@@ -149,5 +179,16 @@ select hotplace_no
 from hotplace
 where hotplace_no in (select hotplace_no from mymap where recom='Y' group by hotplace_no order by count(recom) desc);
 
+INSERT INTO mymap (map_no, hotplace_no, user_no, recom, map_memo, recom_date)
+VALUES (1, 2, 3, 'Some Recommendation', 'Some Memo', NOW());
+
+INSERT INTO emorview (map_no, hotplace_no, review, emo_result)
+VALUES (LAST_INSERT_ID(), 2, 'Some Review Text', 0.85);
+
+insert all
+into mymap values(hotplace_no=3,user_no=95,recom='Y',recom_date=NOW())
+into emoreview values(review='또가고싶어요',emo_result=95)
+select *
+from dual;
 
 

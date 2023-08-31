@@ -25,4 +25,10 @@ public class MainRepositoryImpl implements MainRepository{
         return eatjjimList;
     }
 
+    @Override
+    public List cafejjim(HashMap map){
+        List cafejjimList = sqlSession.selectList("main.allBestCafeJjim",map);
+        return cafejjimList;
+    }
+
 }

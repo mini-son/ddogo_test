@@ -14,22 +14,28 @@
     <!--오늘 전국 베스트 찜(음식점)-->
     <select id="allBestEatJjim" resultType="map">
         <![CDATA[
-		select distinct h.hotplace_name
+        select h.hotplace_name, count(m.map_no) as jjim
         from hotplace h
-        left join mymap m
-        on h.hotplace_no=m.hotplace_no
-        where timestampdiff(day,recom_date,now())=0 and m.recom='Y' and h.hotplace_cate_no=1;
+        left join mymap m on h.hotplace_no = m.hotplace_no
+        where timestampdiff(day, m.recom_date, now()) = 0
+          and m.recom = 'Y'
+          and h.hotplace_cate_no = 1
+        group by h.hotplace_name
+        order by jjim desc limit 3;
 		]]>
     </select>
 
     <!--오늘 전국 베스트 찜(카페)-->
     <select id="allBestCafeJjim" resultType="map">
         <![CDATA[
-		select distinct h.hotplace_name
+        select h.hotplace_name, count(m.map_no) as jjim
         from hotplace h
-        left join mymap m
-        on h.hotplace_no=m.hotplace_no
-        where timestampdiff(day,recom_date,now())=0 and m.recom='Y' and h.hotplace_cate_no=2;
+        left join mymap m on h.hotplace_no = m.hotplace_no
+        where timestampdiff(day, m.recom_date, now()) = 0
+          and m.recom = 'Y'
+          and h.hotplace_cate_no = 2
+        group by h.hotplace_name
+        order by jjim desc limit 3;
 		]]>
     </select>
 </mapper>

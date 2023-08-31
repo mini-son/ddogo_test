@@ -57,12 +57,25 @@ left join mymap m
 on h.hotplace_no=m.hotplace_no
 where timestampdiff(month,m.recom_date ,now()) <=1 and h.gugun='강남구' and h.hotplace_cate_no=1;
 
+-- 이번달 전국 맛집 3개
+select distinct h.hotplace_name
+from hotplace h
+left join mymap m
+on h.hotplace_no=m.hotplace_no
+where timestampdiff(month,m.recom_date ,now()) <=1 and h.hotplace_cate_no=1;
+
 -- 또갈 3개 맵 조인
 select distinct h.hotplace_no,h.hotplace_name,h.gugun,m.hotplace_no,m.recom,m.recom_date,h.hotplace_cate_no
 from hotplace h left join mymap m
 on h.hotplace_no=m.hotplace_no left join emoreview e
 on e.map_no=m.map_no
 where m.recom='Y';
+
+-- 또갈 3개 맵 조인(hotplace,mymap,emoreview)
+select distinct h.hotplace_no,h.sido,h.gugun,m.hotplace_no,m.recom,m.recom_date,h.hotplace_cate_no
+from hotplace h left join mymap m
+on h.hotplace_no=m.hotplace_no left join emoreview e
+on e.map_no=m.map_no;
 
 
   SELECT DISTINCT h.hotplace_name
@@ -123,3 +136,18 @@ where hotplace.gugun like '%강남%';
 select *
 from mymap
 where timestampdiff(month,recom_date ,now())<1;
+
+select map_no
+from mymap
+where map_no=1;
+
+select map_no
+        from mymap
+        where map_no=2;
+
+select hotplace_no
+from hotplace
+where hotplace_no in (select hotplace_no from mymap where recom='Y' group by hotplace_no order by count(recom) desc);
+
+
+

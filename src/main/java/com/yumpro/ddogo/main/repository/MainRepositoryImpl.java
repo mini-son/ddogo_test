@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Repository
 public class MainRepositoryImpl implements MainRepository{
     @Autowired
@@ -14,6 +17,12 @@ public class MainRepositoryImpl implements MainRepository{
     public int mapno() throws DataAccessException {
         int mapno = (Integer)sqlSession.selectOne("main.mapno");
         return mapno;
+    }
+
+    @Override
+    public List eatjjim(HashMap map){
+        List eatjjimList = sqlSession.selectList("main.allBestEatJjim",map);
+        return eatjjimList;
     }
 
 }

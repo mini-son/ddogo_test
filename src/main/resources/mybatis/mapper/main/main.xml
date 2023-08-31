@@ -2,11 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="main">
+    <!--test-->
     <select id="mapno" resultType="int">
         <![CDATA[
 		select map_no
         from mymap
         where map_no=2
+		]]>
+    </select>
+
+    <!--오늘 전국 베스트 찜(음식점)-->
+    <select id="allBestEatJjim" resultType="map">
+        <![CDATA[
+		select distinct h.hotplace_name
+        from hotplace h
+        left join mymap m
+        on h.hotplace_no=m.hotplace_no
+        where timestampdiff(day,recom_date,now())=0 and m.recom='Y' and h.hotplace_cate_no=1;
 		]]>
     </select>
 </mapper>

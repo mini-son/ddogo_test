@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+<tr>
+    <th>전국 오늘의 맛집</th>
+</tr>
+    <tr th:each="eatjjim : ${eatjjim}">
+        <td th:text="${eatjjim.hotplace_name}"></td>
+    </tr>
+</table>
+
+
+</body>
+</html>

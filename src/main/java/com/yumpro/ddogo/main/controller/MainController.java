@@ -4,7 +4,12 @@ import com.yumpro.ddogo.main.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.List;
 
 @SpringBootApplication
 @Controller
@@ -13,12 +18,22 @@ public class MainController {
     private MainService mainService;
 
     @RequestMapping("test")
-    public int mapno() throws Exception {
+    public String mapno() throws Exception {
 
         int mapno = mainService.mapno();
 
         System.out.println("mapno="+mapno);
-        return mapno;
+        return "main/test";
     }
+
+    @RequestMapping("allBestEatJjim")
+    public String allBestJjim(Model model, @RequestParam HashMap map) throws Exception {
+        List eatjjim = mainService.eatjjim(map);
+        System.out.println("eatjjim="+eatjjim);
+        model.addAttribute("eatjjim",eatjjim);
+        return "main/test2";
+    }
+
+
 
 }

@@ -35,7 +35,7 @@ public class MainRepositoryImpl implements MainRepository{
 
     @Override
     public List<HashMap<String, Object>> eatjjim2(){
-        List<HashMap<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim3");
+        List<HashMap<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim4");
         return eatjjimList;
     }
 

@@ -27,7 +27,7 @@ public class MainController {
 
     //오늘 전국 베스트 찜
     @RequestMapping("allBestJjim")
-    public String allBestJjim3(Model model) throws Exception {
+    public String allBestJjim(Model model) throws Exception {
         //맛집
         List<HashMap<String, Object>> eatjjim = mainService.eatjjim();
         //카페
@@ -37,7 +37,7 @@ public class MainController {
 
         model.addAttribute("cafejjim",cafejjim);
         model.addAttribute("eatjjim",eatjjim);
-        return "main/test2";
+        return "main/main";
     }
 
 

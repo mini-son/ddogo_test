@@ -201,7 +201,7 @@ with ReviewAverages as (
     from emoreview
     group by hotplace_no
 )
-select h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
+select h.hotplace_name, h.hotplace_no, count(m.map_no) as jjim,
        format(ra.avg_emo_result,2) as avg_emo_result
 from hotplace h
 left join mymap m on h.hotplace_no = m.hotplace_no

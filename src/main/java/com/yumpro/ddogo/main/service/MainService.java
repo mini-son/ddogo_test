@@ -1,15 +1,33 @@
 package com.yumpro.ddogo.main.service;
 
+import com.yumpro.ddogo.main.repository.MainRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 
-public interface MainService {
+@Service
+public class MainService{
+    @Autowired
+    private MainRepository mainRepository;
 
-    public int mapno() throws Exception;
 
-    public List<HashMap<String, Object>> eatjjim() throws Exception;
+    public int mapno() throws Exception{
+        int mapno = mainRepository.mapno();
+        return mapno;
+    }
 
-    public List<HashMap<String, Object>> cafejjim() throws Exception;
+    public List<HashMap<String, Object>> eatjjim() throws Exception{
+        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim();
+        return eatjjimList;
+    }
+
+    public List<HashMap<String, Object>> cafejjim() throws Exception{
+        List<HashMap<String, Object>> cafejimList = mainRepository.cafejjim();
+        return cafejimList;
+    }
+
 
 
 }

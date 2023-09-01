@@ -20,7 +20,7 @@ public class MainServiceImpl implements MainService{
         return mapno;
     }
 
-    @Override
+/*    @Override
     public List<Map<String, Object>> eatjjim(HashMap map) throws Exception{
         List<Map<String, Object>> eatjjimList = mainRepository.eatjjim(map);
         return eatjjimList;
@@ -30,15 +30,15 @@ public class MainServiceImpl implements MainService{
         List<Map<String, Object>> cafejimList = mainRepository.cafejjim(map);
         return cafejimList;
     }
-
+*/
     @Override
-    public List<HashMap<String, Object>> eatjjim2() throws Exception{
-        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim2();
+    public List<HashMap<String, Object>> eatjjim() throws Exception{
+        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim();
         return eatjjimList;
     }
 
-    public List<HashMap<String, Object>> cafejjim2() throws Exception{
-        List<HashMap<String, Object>> cafejimList = mainRepository.cafejjim2();
+    public List<HashMap<String, Object>> cafejjim() throws Exception{
+        List<HashMap<String, Object>> cafejimList = mainRepository.cafejjim();
         return cafejimList;
     }
 

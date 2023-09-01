@@ -11,12 +11,12 @@ public interface MainRepository {
 
     public int mapno() throws DataAccessException;
 
-    public List<Map<String, Object>> eatjjim(HashMap map);
+  /*  public List<Map<String, Object>> eatjjim(HashMap map);
 
     public List<Map<String, Object>> cafejjim(HashMap map);
+*/
+    public List<HashMap<String, Object>> eatjjim();
 
-    public List<HashMap<String, Object>> eatjjim2();
-
-    public List<HashMap<String, Object>> cafejjim2();
+    public List<HashMap<String, Object>> cafejjim();
 
 }

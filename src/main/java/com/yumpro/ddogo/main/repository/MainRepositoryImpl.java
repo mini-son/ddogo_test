@@ -20,7 +20,7 @@ public class MainRepositoryImpl implements MainRepository{
         int mapno = (Integer)sqlSession.selectOne("main.mapno");
         return mapno;
     }
-
+/*
     @Override
     public List<Map<String, Object>> eatjjim(HashMap map){
         List<Map<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim2",map);
@@ -32,15 +32,15 @@ public class MainRepositoryImpl implements MainRepository{
         List<Map<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim2",map);
         return eatjjimList;
     }
-
+*/
     @Override
-    public List<HashMap<String, Object>> eatjjim2(){
-        List<HashMap<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim4");
+    public List<HashMap<String, Object>> eatjjim(){
+        List<HashMap<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim");
         return eatjjimList;
     }
 
     @Override
-    public List<HashMap<String, Object>> cafejjim2(){
+    public List<HashMap<String, Object>> cafejjim(){
         List<HashMap<String, Object>> cafejjimList = sqlSession.selectList("main.allBestCafeJjim");
         return cafejjimList;
     }

@@ -1,5 +1,6 @@
 package com.yumpro.ddogo.main.repository;
 
+import com.yumpro.ddogo.main.dto.EmoreviewDTO;
 import org.springframework.dao.DataAccessException;
 
 import java.util.HashMap;
@@ -14,9 +15,8 @@ public interface MainRepository {
 
     public List<Map<String, Object>> cafejjim(HashMap map);
 
-    public List<HashMap<String, Object>> eatjjim2(HashMap map);
+    public List<HashMap<String, Object>> eatjjim2();
 
-    public List<HashMap<String, Object>> cafejjim2(HashMap map);
+    public List<HashMap<String, Object>> cafejjim2();
 
-    public double avgEmoResult(int hotplace_no);
 }

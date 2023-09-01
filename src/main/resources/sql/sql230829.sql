@@ -79,7 +79,155 @@ where timestampdiff(day, m.recom_date, now()) = 0
   and m.recom = 'Y'
   and h.hotplace_cate_no = 1
 group by h.hotplace_name, h.hotplace_no
-order by jjim desc limit 3;
+order by jjim desc limit 10;
+
+select timestampdiff(day, recom_date, now()) from mymap;
+
+-- 3개 테이블(hotplace_name,hotplace_no,map_no)
+select h.hotplace_name, h.hotplace_no,count(m.map_no) as jjim
+from hotplace h
+left join mymap m on h.hotplace_no = m.hotplace_no
+where datediff(m.recom_date, now()) = 0
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 1
+group by h.hotplace_name, h.hotplace_no
+order by jjim desc limit 10;
+
+SELECT h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
+       COALESCE(AVG(er.emo_result), 0) as avg_emo_result
+FROM hotplace h
+LEFT JOIN mymap m ON h.hotplace_no = m.hotplace_no
+LEFT JOIN emoreview er ON h.hotplace_no = er.hotplace_no
+WHERE datediff(m.recom_date, now()) = 0
+  AND m.recom = 'Y'
+  AND h.hotplace_cate_no = 1
+GROUP BY h.hotplace_name, h.hotplace_no
+ORDER BY jjim DESC
+LIMIT 10;
+
+
+--
+select
+    h.hotplace_name,
+    h.hotplace_no,
+    COUNT(m.map_no) as jjim,
+    avg(er.emo_result) as avg_emo_result
+from
+    hotplace h
+left join
+    mymap m on h.hotplace_no = m.hotplace_no
+left join
+    emoreview er on h.hotplace_no = er.hotplace_no
+where
+    datediff(m.recom_date, now()) = 0
+    and m.recom = 'Y'
+    and h.hotplace_cate_no = 1
+group by
+    h.hotplace_name, h.hotplace_no
+order by
+    jjim desc
+limit 10;
+
+-- 4개 테이블(전국 맛집 best)
+SELECT h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
+       AVG(er.emo_result) as avg_emo_result
+FROM hotplace h
+JOIN hotplace_cate hc ON h.hotplace_cate_no = hc.hotplace_cate_no
+LEFT JOIN mymap m ON h.hotplace_no = m.hotplace_no
+LEFT JOIN emoreview er ON h.hotplace_no = er.hotplace_no
+WHERE m.recom = 'Y'
+  AND DATE(m.recom_date) = CURDATE()
+  AND h.hotplace_cate_no = 1
+GROUP BY h.hotplace_name, h.hotplace_no
+ORDER BY jjim DESC limit 10;
+
+-- 4개 테이블(전국 맛집 best)
+SELECT h.hotplace_name, h.hotplace_no, 
+		COUNT(m.map_no) as jjim,
+       AVG(er.emo_result) as avg_emo_result
+FROM hotplace h
+JOIN hotplace_cate hc ON h.hotplace_cate_no = hc.hotplace_cate_no
+LEFT JOIN mymap m ON h.hotplace_no = m.hotplace_no
+LEFT JOIN emoreview er ON h.hotplace_no = er.hotplace_no
+WHERE m.recom = 'Y'
+  AND DATE(m.recom_date) = CURDATE()
+  AND h.hotplace_cate_no = 1
+GROUP BY h.hotplace_name, h.hotplace_no
+ORDER BY jjim DESC limit 10;
+
+select count(map_no)
+from mymap
+where recom='Y' and DATE(recom_date) = CURDATE();
+
+-- 
+WITH ReviewAverages AS (
+    SELECT hotplace_no, AVG(emo_result) AS avg_emo_result
+    FROM emoreview
+    GROUP BY hotplace_no
+)
+SELECT h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
+       COALESCE(ra.avg_emo_result, 0) as avg_emo_result
+FROM hotplace h
+LEFT JOIN mymap m ON h.hotplace_no = m.hotplace_no
+LEFT JOIN ReviewAverages ra ON h.hotplace_no = ra.hotplace_no
+WHERE datediff(m.recom_date, now()) = 0
+  AND m.recom = 'Y'
+  AND h.hotplace_cate_no = 1
+GROUP BY h.hotplace_name, h.hotplace_no, ra.avg_emo_result
+ORDER BY jjim DESC
+LIMIT 10;
+
+-- ★오늘의 전국 best 맛집/hotplace_name,hotplace_no,jjim,avg_emo_result(4개 테이블 조인)★
+with ReviewAverages as (
+    select hotplace_no, avg(emo_result) as avg_emo_result
+    from emoreview
+    group by hotplace_no
+)
+select h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
+       ra.avg_emo_result as avg_emo_result
+from hotplace h
+left join mymap m on h.hotplace_no = m.hotplace_no
+left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no
+where datediff(m.recom_date, now()) = 0
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 2
+group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
+order by jjim desc
+limit 3;
+
+
+
+select
+    h.hotplace_name,
+    h.hotplace_no,
+    COUNT(m.map_no) as jjim,
+    avg(er.emo_result) as avg_emo_result
+from
+    hotplace h
+left join
+    mymap m on h.hotplace_no = m.hotplace_no
+left join
+    emoreview er on h.hotplace_no = er.hotplace_no
+where
+    timestampdiff(day, m.recom_date, now()) <=10
+    and m.recom = 'Y'
+    and h.hotplace_cate_no = 1
+group by
+    h.hotplace_name, h.hotplace_no
+order by
+    jjim desc
+limit 10;
+
+
+SELECT h.hotplace_name, h.hotplace_no, COUNT(m.map_no) AS jjim
+FROM hotplace h
+LEFT JOIN mymap m ON h.hotplace_no = m.hotplace_no
+WHERE m.recom_date = CURDATE()
+  AND m.recom = 'Y'
+  AND h.hotplace_cate_no = 1
+GROUP BY h.hotplace_name, h.hotplace_no
+ORDER BY jjim DESC
+LIMIT 3;
 
 
 
@@ -159,7 +307,7 @@ order by (select count(map_no) from ddogo.mymap where recom='Y') desc limit 3;
 -- 가게별 감정분석 점수 평균
 select avg(emoreview.emo_result)
 from emoreview
-where hotplace_no=1;
+where hotplace_no=4;
 
 
 

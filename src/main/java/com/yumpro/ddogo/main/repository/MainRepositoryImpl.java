@@ -1,5 +1,6 @@
 package com.yumpro.ddogo.main.repository;
 
+import com.yumpro.ddogo.main.dto.EmoreviewDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,27 +28,22 @@ public class MainRepositoryImpl implements MainRepository{
     }
 
     @Override
-    public List<HashMap<String, Object>> cafejjim2(HashMap map){
-        List<HashMap<String, Object>> cafejjimList = sqlSession.selectList("main.allBestCafeJjim",map);
-        return cafejjimList;
-    }
-
-    @Override
-    public List<HashMap<String, Object>> eatjjim2(HashMap map){
-        List<HashMap<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim2",map);
+    public List<Map<String, Object>> cafejjim(HashMap map){
+        List<Map<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim2",map);
         return eatjjimList;
     }
 
     @Override
-    public List<Map<String, Object>> cafejjim(HashMap map){
-        List<Map<String, Object>> cafejjimList = sqlSession.selectList("main.allBestCafeJjim",map);
-        return cafejjimList;
+    public List<HashMap<String, Object>> eatjjim2(){
+        List<HashMap<String, Object>> eatjjimList = sqlSession.selectList("main.allBestEatJjim3");
+        return eatjjimList;
     }
 
     @Override
-    public double avgEmoResult(int hotplace_no){
-        double avgEmoResult = sqlSession.selectOne("main.emoAnalAvg",hotplace_no);
-        return avgEmoResult;
+    public List<HashMap<String, Object>> cafejjim2(){
+        List<HashMap<String, Object>> cafejjimList = sqlSession.selectList("main.allBestCafeJjim");
+        return cafejjimList;
     }
+
 
 }

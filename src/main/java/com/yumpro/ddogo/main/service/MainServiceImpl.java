@@ -1,5 +1,6 @@
 package com.yumpro.ddogo.main.service;
 
+import com.yumpro.ddogo.main.dto.EmoreviewDTO;
 import com.yumpro.ddogo.main.repository.MainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,19 +32,16 @@ public class MainServiceImpl implements MainService{
     }
 
     @Override
-    public List<HashMap<String, Object>> eatjjim2(HashMap map) throws Exception{
-        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim2(map);
+    public List<HashMap<String, Object>> eatjjim2() throws Exception{
+        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim2();
         return eatjjimList;
     }
 
-    public List<HashMap<String, Object>> cafejjim2(HashMap map) throws Exception{
-        List<HashMap<String, Object>> cafejimList = mainRepository.cafejjim2(map);
+    public List<HashMap<String, Object>> cafejjim2() throws Exception{
+        List<HashMap<String, Object>> cafejimList = mainRepository.cafejjim2();
         return cafejimList;
     }
 
-    public double emoAnalAvg(int hotplace_no) throws Exception{
-        double avgEmoResult = mainRepository.avgEmoResult(hotplace_no);
-        return avgEmoResult;
-    }
+
 
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class EmoreviewDTO {
+public class BestJjimDTO {
 
     private int review_no;
     private String review;

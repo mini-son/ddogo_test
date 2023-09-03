@@ -1,17 +1,18 @@
 package com.yumpro.ddogo.main.service;
 
+import com.yumpro.ddogo.main.dto.SidogugunDTO;
 import com.yumpro.ddogo.main.repository.MainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MainService{
     @Autowired
     private MainRepository mainRepository;
-
 
     public int mapno() throws Exception{
         int mapno = mainRepository.mapno();
@@ -28,6 +29,16 @@ public class MainService{
         return cafejimList;
     }
 
+    public Map<String, List<String>> getsidogungu() {
+        Map<String, List<String>> sigunguMap = new HashMap<>();
+        List<String> sidoList = mainRepository.getSelectList();
 
+        for (String sido : sidoList) {
+            List<String> sigunguList = mainRepository.gugunList(sido);
+            sigunguMap.put(sido, sigunguList);
+        }
+
+        return sigunguMap;
+    }
 
 }

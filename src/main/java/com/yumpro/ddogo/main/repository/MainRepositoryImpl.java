@@ -1,5 +1,6 @@
 package com.yumpro.ddogo.main.repository;
 
+import com.yumpro.ddogo.main.dto.SidogugunDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MainRepositoryImpl implements MainRepository{
@@ -31,5 +33,15 @@ public class MainRepositoryImpl implements MainRepository{
         return cafejjimList;
     }
 
+    @Override
+    public List<String> getSelectList() throws DataAccessException{
+        return sqlSession.selectList("main.sidogugun");
+    }
+
+    @Override
+    public List<String> gugunList(String sido) throws DataAccessException{
+        List<String> gugunList = sqlSession.selectList("main.gugunList",sido);
+        return gugunList;
+    }
 
 }

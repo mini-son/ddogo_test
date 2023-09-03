@@ -1,0 +1,29 @@
+<html layout:decorate="~{layout}">
+<div>
+    <form>
+    <select id="selectBox_test">
+        <option value="daily_test" selected="selected">일일테스트</option>
+        <option value="level_test">레벨테스트</option>
+        <option value="monthly_test">월간테스트</option>
+    </select>
+    </form>
+</div>
+</html>
+
+<script layout:fragment="script">
+    $(document).on("change", "#selectBox_test", function(){
+
+   $.ajax({
+   type: 'post',
+   url: 'ajax_step1_table.php',
+   data: {
+    select_value: 여기에 선택된 값을 넣고싶어요
+   },
+   success: function (response)
+   {
+      alert(response);
+      $("#table").html(response);
+   }
+   });
+ });
+</script>

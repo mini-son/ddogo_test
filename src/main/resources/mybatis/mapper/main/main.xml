@@ -65,5 +65,20 @@
 		]]>
     </select>
 
+    <select id="sidogugun" resultType="String">
+        <![CDATA[
+		SELECT distinct sido
+        FROM hotplace
+		]]>
+    </select>
+
+    <select id="gugunList" resultType="String" parameterType="String">
+        <![CDATA[
+		SELECT gugun
+        FROM hotplace
+        where sido=#{sido}
+		]]>
+    </select>
+
 
 </mapper>

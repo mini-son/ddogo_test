@@ -1,0 +1,115 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html layout:decorate="~{layout}">
+<div>
+    <form name="frmCategoryTest">
+        <div id="div_category">
+            <select name="ag_parent[]" depth="0" onchange="selectCategory(this);">
+                <option value="">Category</option>
+                <option value="1">Category1</option>
+                <option value="2">Category2</option>
+                <option value="3">Category3</option>
+                <option value="4">Category4</option>
+            </select>
+        </div>
+    </form>
+</div>
+</html>
+
+<script layout:fragment="script">
+    function selectCategory(obj) {
+    var ag_idx = obj.value;
+    var ag_depth = obj.getAttribute("depth");
+
+    var felm = getObjectFormAuthGroup();
+    for(var i=0;i<felm.ag_parent.length;i++) {
+        if(ag_depth < felm.ag_parent[i].getAttribute("depth")) {
+            felm.ag_parent[i].remove();
+        } else {
+            if(ag_idx) felm.ag_parent[i].disabled = true;
+        }
+    }
+
+    if(ag_idx) {
+        ag_depth++;
+        getAuthGroupChildren(ag_idx, ag_depth);
+    }
+}
+
+function getAuthGroupChildren(ag_idx, ag_depth) {
+    //ajax를 통하여 json 형태의 데이터를 가져오는 부분을 만들어 추가 합니다.
+    var response = {
+        "1":{
+            "5":"Category1-1", "6":"Category1-2"
+        },
+        "2":{
+            "7":"Category2-1", "8":"Category2-2", "9":"Category2-3"
+        },
+        "3":{
+            "10":"Category3-1", "11":"Category3-2"
+        },
+        "4":{
+            "12":"Category4-1"
+        },
+        "5":{
+            "13":"Category1-1-1", "14":"Category1-1-2"
+        },
+        "6":{
+            "15":"Category1-2-1", "16":"Category1-2-2"
+        },
+        "13":{
+            "17":"Category1-1-1-1", "18":"Category1-1-1-2"
+        }
+    };
+
+    var felm = getObjectFormAuthGroup();
+    for(var i=0;i<felm.ag_parent.length;i++) {
+        felm.ag_parent[i].disabled = false;
+    }
+
+    console.log(response[ag_idx]);
+    if(typeof(response[ag_idx]) == "undefined") return ;
+
+    var selectbox = document.createElement('select');
+    selectbox.name = "ag_parent[]";
+    selectbox.setAttribute("depth", ag_depth);
+    selectbox.onchange = function () {
+        selectCategory(this);
+    };
+
+    selectbox.options.length = 0;
+    selectbox.options[0] = new Option("Category", "");
+
+    var lists = response[ag_idx];
+    for(var key in lists) {
+        var val = lists[key];
+        selectbox.options[selectbox.options.length] = new Option(val, key);
+    }
+
+    var div_category = document.getElementById('div_category');
+    div_category.appendChild(selectbox);
+}
+
+function getObjectFormAuthGroup() {
+    var f = document.frmCategoryTest;
+    var obj = {};
+
+    for(var i=0; i<f.elements.length;i++) {
+        var type = f.elements[i].type;
+        var elName = f.elements[i].name;
+
+        if(/(text|textarea|select|hidden)/.test(type)) {
+            if(/(\[|\])/g.test(elName)) {
+                elName = elName.replace(/(\[|\])/g,"");
+                if(typeof(obj[elName]) == 'undefined') {
+                    obj[elName] = [];
+                }
+                obj[elName].push(f.elements[i]);
+            } else {
+                obj[elName] = f.elements[i];
+            }
+        }
+    }
+    return obj;
+}
+
+</script>

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html layout:decorate="~{layout}">
+<div>
+    <form>
     <select id="food_parent" onchange="loadFoodChild()"></select>
     <select id="food_child"></select>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</html>
 
-    <script>
+<script layout:fragment="script">
         let food_parent = [
             {v:"",t:""},
             {v:"1",t:"중식"},
@@ -67,6 +67,4 @@
         }
 
         loadFoodParent();
-    </script>
-</body>
-</html>
+</script>

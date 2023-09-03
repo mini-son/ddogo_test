@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<select name="sido" id="sido"></select>
+<select name="gugun" id="gugun"></select>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</html>
+
+<script layout:fragment="script">
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        url: "/test3", // 해당 엔드포인트로 요청을 보냅니다.
+        dataType: "json",
+    success: //정상 호출 함수
+         function(response){
+           //response안에 응답내용이 문자열로 변환된 (JSONObject객체를) 받는다
+          console.log(response);
+
+          var sidoSelect = $("#sido");//<select name="sido" id="sido">
+          sidoSelect.empty();
+          sidoSelect.append('<option value="">선택하세요</option>');
+
+          for( const sido in  response ){
+              console.log(sido)
+              sidoSelect.append('<option value="'+sido+'">'+sido+'</option>');
+          }
+
+          //두 번째 select문에서 선택시 호출 -> 해당 시군구를 가져와 2번째 select에 출력
+          sidoSelect.change(function(){
+              const sigunguArr = response[$(this).val()] || [];//서울시 경기도 ""
+              console.log(sigunguArr);
+              var sigunguSelect = $("#sigungu");//<select name="sigungu" id="sigungu">
+              sigunguSelect.empty();
+              sigunguSelect.append('<option value="">선택하세요</option>');
+
+              for( const i in sigunguArr ){
+                  console.log(i)
+                  sigunguSelect.append('<option value="'+sigunguArr[i]+'">'+sigunguArr[i]+'</option>');
+              }
+          });//체인지이벤트끝
+
+         },
+       error://오류발생 호출 함수. 4xx 또는 5xx
+             // jqXHR: XMLHttpRequest 객체
+             // textStatus: 에러 상태를 설명하는 문자열
+             // errorThrown: 에러의 예외 객체 (예외가 발생하지 않으면 undefined)
+           function(jqXHR, textStatus, errorThrown) {
+           console.log("error:",textStatus,errorThrown);
+             alert("no~"+textStatus);
+         }
+      });//ajax()끝
+
+
+  });//jQuery끝
+
+
+</script>

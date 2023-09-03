@@ -1,0 +1,78 @@
+<html layout:decorate="~{layout}">
+<div>
+    <form name="form1">
+        <p align="center">
+            <!--첫번째 카테고리-->
+            <select name="S1" size="1" onChange="replace(this.options.selectedIndex-1)">
+                <option>--학년--</option>
+                <option>1학년</option> <!-- 1학년 option에 selected 제거 -->
+                <option>2학년</option>
+                <option>3학년</option>
+            </select>
+            <!--두번째 카테고리-->
+            <select name="S2" size="1" disabled>
+                <option>--반--</option>
+
+                <!-- 불필요한 option들 및 속성 제거 -->
+            </select>
+            <img onClick="go()" src="/img/search_ok.gif" align="middle" width="32" height="20">
+
+            <!-- input type='image'  => img 태그로 변경 -->
+        </p>
+
+    </form>
+</div>
+</html>
+
+<script layout:fragment="script">
+    var xhr = new XMLHttpRequest();
+   xhr.open("GET", "${cPath}/sidoSelect.do", true);
+   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+   response.setCharacterEncoding("UTF-8");
+   response.setContentType("application/json;charset=UTF-8");
+
+   xhr.onload = function () {
+     if (xhr.status === 200) {
+       var response = JSON.parse(xhr.responseText);
+       console.log(response);
+
+       var sidoSelect = document.getElementById("sido");
+       sidoSelect.innerHTML = '<option value="">선택하세요</option>';
+
+       for (var sido in response) {
+         console.log(sido);
+         var option = document.createElement("option");
+         option.value = sido;
+         option.textContent = sido;
+         sidoSelect.appendChild(option);
+       }
+
+       sidoSelect.addEventListener("change", function () {
+         var sigunguArr = response[this.value] || [];
+         console.log(sigunguArr);
+
+         var sigunguSelect = document.getElementById("sigungu");
+         sigunguSelect.innerHTML = '<option value="">선택하세요</option>';
+
+         for (var i in sigunguArr) {
+           console.log(i);
+           var option = document.createElement("option");
+           option.value = sigunguArr[i];
+           option.textContent = sigunguArr[i];
+           sigunguSelect.appendChild(option);
+         }
+       });
+     } else {
+       console.log("Error:", xhr.statusText);
+       alert("no~" + xhr.statusText);
+     }
+   };
+
+   xhr.onerror = function () {
+     console.log("Network Error");
+     alert("Network Error");
+   };
+
+   xhr.send();
+ });
+</script>

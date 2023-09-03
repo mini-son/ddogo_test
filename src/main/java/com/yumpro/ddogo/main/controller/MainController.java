@@ -53,35 +53,9 @@ public class MainController {
         return "main/main";
     }
 
-    @RequestMapping("ex")
-    public String ex(){
-        return "main/select.html";
-    }
-/*
-    @RequestMapping(value = "/{option1}", produces = "application/json; charset=UTF-8", method= RequestMethod.GET)
-    @ResponseBody
-    public void get_option2(HttpServletResponse res, @PathVariable String option1) throws IOException {
 
-        //List<Option> options = OptionService.findOption2(option1);
-        List<String> optionList = new ArrayList();*/
-
-      /*  for (int i = 0; i < options.size(); i++) {
-            optionList.add(options.get(i).getOption2());
-        }
-*/
-  /*      JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < optionList.size(); i++) {
-            jsonArray.put(optionList.get(i));
-        }
-
-        PrintWriter pw = res.getWriter();
-        pw.print(jsonArray.toString());
-        pw.flush();
-        pw.close();
-    }*/
-
-    @GetMapping(value = "test3")
-    public String select_ajax(HttpServletResponse response) throws Exception {
+    @GetMapping(value = "test2")
+    public String select_ajax(HttpServletResponse response,Model model) throws Exception {
 
         Map<String,List<String>> sigunguMap = mainService.getsidogungu();
         JSONObject obj = new JSONObject();
@@ -101,13 +75,10 @@ public class MainController {
         String jsonStr = obj.toString();
         System.out.println("jsonStr ="+jsonStr); //콘솔출력.확인용
         out.print(jsonStr); //client로 보내기
+        model.addAttribute(jsonStr);
         return "main/select12";
     }
 
-    @RequestMapping("test2")
-    public String test() throws Exception {
-        return "main/select12";
-    }
 
 
 

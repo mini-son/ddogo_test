@@ -1,6 +1,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <div>
+<!--    <tr>
+        <th>시도</th>
+        <th>구군</th>
+    </tr>
+    <tr th:each="${jsonStr}">
+        <td th:text="${jsonStr.sido}"></td>
+        <td th:text="${jsonStr.gugun}"></td>
+    </tr>-->
     <form id="frm">
         <label for="sido">시/도</label>
         <select name="sido" id="sido">
@@ -17,7 +25,7 @@
 <script layout:fragment="script">
     document.addEventListener("DOMContentLoaded", function () {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "${cPath}/sidoSelect.do", true);
+    xhr.open("GET", "main/select5.html", true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     response.setCharacterEncoding("UTF-8");
     response.setContentType("application/json;charset=UTF-8");

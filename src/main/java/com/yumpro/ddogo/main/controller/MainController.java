@@ -1,12 +1,21 @@
 package com.yumpro.ddogo.main.controller;
 
 import com.yumpro.ddogo.main.service.MainService;
+import com.yumpro.ddogo.main.service.OptionService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +49,30 @@ public class MainController {
         return "main/main";
     }
 
+    @RequestMapping("ex")
+    public String ex(){
+        return "main/select.html";
+    }
 
+    @RequestMapping(value = "/{option1}", produces = "application/json; charset=UTF-8", method= RequestMethod.GET)
+    @ResponseBody
+    public void get_option2(HttpServletResponse res, @PathVariable String option1) throws IOException {
 
+        //List<Option> options = OptionService.findOption2(option1);
+        List<String> optionList = new ArrayList();
+
+      /*  for (int i = 0; i < options.size(); i++) {
+            optionList.add(options.get(i).getOption2());
+        }
+*/
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < optionList.size(); i++) {
+            jsonArray.put(optionList.get(i));
+        }
+
+        PrintWriter pw = res.getWriter();
+        pw.print(jsonArray.toString());
+        pw.flush();
+        pw.close();
+    }
 }

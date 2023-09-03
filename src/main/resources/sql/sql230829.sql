@@ -269,7 +269,7 @@ select distinct h.hotplace_name
 from hotplace h
 left join mymap m
 on h.hotplace_no=m.hotplace_no
-where timestampdiff(month,m.recom_date ,now()) <=1 and h.hotplace_cate_no=1;
+where timestampdiff(month,m.recom_date ,now()) <=1 and h.hotplace_cate_no=1 limit 3;
 
 -- 또갈 3개 맵 조인
 select distinct h.hotplace_no,h.hotplace_name,h.gugun,m.hotplace_no,m.recom,m.recom_date,h.hotplace_cate_no
@@ -349,11 +349,6 @@ from hotplace
 where hotplace_no in (select hotplace_no from mymap where recom='Y' group by hotplace_no order by count(recom) desc);
 
 
-insert all
-into mymap values(hotplace_no=3,user_no=95,recom='Y',recom_date=NOW())
-into emoreview values(review='또가고싶어요',emo_result=95)
-select *
-from dual;
 
 -- hotplace의 정보와 해당 hotplace에 대한 추천 수 및 감정 결과의 평균을 계산하고 그룹화한 결과를 반환
  SELECT
@@ -372,5 +367,6 @@ emoreview er ON mm.map_no = er.map_no AND mm.hotplace_no = er.hotplace_no
 GROUP BY
 hp.sido, hp.gugun, hp.hotplace_name, hc.hotplace_cate_name;
 
+-- 이번달 서울시/강남구의 음식점+감정분석결과
 
-
+select hotplace_name from hotplace where sido='서울';

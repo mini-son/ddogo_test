@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <select id="food_parent" onchange="loadFoodChild()"></select>
+    <select id="food_child"></select>
+
+    <script>
+        let food_parent = [
+            {v:"",t:""},
+            {v:"1",t:"중식"},
+            {v:"2",t:"한식"},
+            {v:"3",t:"양식"}
+        ];
+
+        let food_child_1=[
+            {v:"1",t:"짜장면"},
+            {v:"1",t:"짬뽕"},
+            {v:"1",t:"탕수육"}
+        ];
+
+        let food_child_2=[
+            {v:"21 ",t:"육개장"},
+            {v:"22",t:"고등어"},
+            {v:"23",t:"미역국"}
+        ];
+
+       let food_child_3=[
+            {v:"31 ",t:"돈가스"},
+            {v:"32",t:"스테이크"},
+            {v:"33",t:"샐러드"}
+       ];
+
+        function loadFoodParent(){
+            let h=[];
+            food_parent.forEach(item => {
+                h.push('<option value="'+item.v+'">'+item.t+'</option>');
+            });
+            document.getElementById("food_parent").innerHTML=h.join("");
+        }
+
+        function loadFoodParent(){
+            let parent_food = document.getElementById("food_parent").value;
+            let h = [];
+            if(parent_food == ""){
+
+            }else{
+                if(parent_food=="1"){
+                    food_child_1.forEach(item => {
+                     h.push('<option value="'+item.v+'">'+item.t+'</option>');
+                    });
+                }else if(parent_food=="2"){
+                    food_child_1.forEach(item => {
+                     h.push('<option value="'+item.v+'">'+item.t+'</option>');
+                    });
+                }else if(parent_food=="3"){
+                    food_child_1.forEach(item => {
+                     h.push('<option value="'+item.v+'">'+item.t+'</option>');
+                    });
+                }
+            }
+
+            document.getElementById("food_child").innerHTML=h.join("");
+        }
+
+        loadFoodParent();
+    </script>
+</body>
+</html>

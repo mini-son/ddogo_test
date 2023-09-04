@@ -76,10 +76,12 @@ public class MainController {
         System.out.println("jsonStr ="+jsonStr); //콘솔출력.확인용
         out.print(jsonStr); //client로 보내기
         model.addAttribute(jsonStr);
-        return "main/select17";
+        model.addAttribute("sigunguMap",sigunguMap);
+        System.out.println("sigunguMap_test2"+sigunguMap);
+        return "main/select21";
     }
 
-    @GetMapping(value = "test3",produces = MediaType.APPLICATION_JSON_VALUE)
+   /* @GetMapping(value = "test3",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, List<String>> select_ajax2(HttpServletResponse response, Model model) throws Exception {
         Map<String, List<String>> sigunguMap = mainService.getsidogungu();
@@ -101,7 +103,18 @@ public class MainController {
         model.addAttribute("jsonStr", jsonStr); // 모델에 JSON 문자열을 "jsonStr" 속성으로 추가
 
         return sigunguMap;
+    }*/
+
+    @GetMapping(value = "test3", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, List<String>> select_ajax2(HttpServletResponse response, Model model) throws Exception {
+        Map<String, List<String>> sigunguMap = mainService.getsidogungu();
+        model.addAttribute("sigunguMap",sigunguMap);
+        System.out.println("sigunguMap"+sigunguMap);
+        return sigunguMap;
     }
+
+
 
     @RequestMapping("select")
     public String test() throws Exception {

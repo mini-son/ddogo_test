@@ -370,3 +370,31 @@ hp.sido, hp.gugun, hp.hotplace_name, hc.hotplace_cate_name;
 -- 이번달 서울시/강남구의 음식점+감정분석결과
 
 select hotplace_name from hotplace where sido='서울';
+
+SELECT distinct sido
+FROM hotplace;
+
+SELECT gugun
+FROM hotplace
+where sido='서울';
+
+
+-- ★한달 전국 best 맛집/hotplace_name,hotplace_no,jjim,avg_emo_result(4개 테이블 조인)★/소수점 둘째자리까지
+with ReviewAverages as (
+    select hotplace_no, avg(emo_result) as avg_emo_result
+    from emoreview
+    group by hotplace_no
+)
+select h.hotplace_name, h.hotplace_no, count(m.map_no) as jjim,
+       format(ra.avg_emo_result,2) as avg_emo_result
+from hotplace h
+left join mymap m on h.hotplace_no = m.hotplace_no
+left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no
+where YEAR(m.recom_date) = YEAR(NOW()) AND MONTH(m.recom_date) = MONTH(NOW())
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 1
+  and h.sido='서울'
+  and h.gugun='강남구'
+group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
+order by jjim desc
+limit 3;

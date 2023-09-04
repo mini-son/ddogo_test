@@ -11,6 +11,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class SidogugunDTO {
 
+    private int hotplace_cate_no;
     private String sido;
     private String gugun;
 

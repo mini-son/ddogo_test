@@ -398,3 +398,16 @@ where YEAR(m.recom_date) = YEAR(NOW()) AND MONTH(m.recom_date) = MONTH(NOW())
 group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
 order by jjim desc
 limit 3;
+
+--
+SELECT
+   m.map_no, h.hotplace_no, h.sido, h.gugun, h.address, h.lat, h.lng,
+    h.hotplace_name, m.recom, m.map_memo, e.review, e.emo_result
+FROM
+    ddogo.hotplace h
+JOIN
+    ddogo.mymap m ON h.hotplace_no = m.hotplace_no
+JOIN
+    ddogo.emoreview e ON m.map_no = e.map_no;
+    
+    

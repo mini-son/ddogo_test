@@ -207,7 +207,8 @@ public class MainController {
 
     //-----------------test2 버튼 만들기-----------------
     @GetMapping(value = "select3")
-    public String select_ajax_test2(HttpServletResponse response,Model model) throws Exception {
+    public String select_ajax_test2(HttpServletResponse response,
+                                    Model model) throws Exception {
 
         Map<String,List<String>> sigunguMap = mainService.getsidogungu();
         JSONObject obj = new JSONObject();
@@ -229,7 +230,7 @@ public class MainController {
         //out.print(jsonStr); //client로 보내기
         model.addAttribute(jsonStr);
         model.addAttribute("sigunguMap",sigunguMap);
-        System.out.println("sigunguMap_test2"+sigunguMap);
+        System.out.println("sigunguMap_test3"+sigunguMap);
 
 
         //String getSido = sidogugunDTO.getSido();
@@ -243,7 +244,7 @@ public class MainController {
     }
 
 
-    @GetMapping(value = "sigunguMap4", produces = MediaType.APPLICATION_JSON_VALUE)
+ /*   @GetMapping(value = "sigunguMap4", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, List<String>> select_ajax2_test2(
             @RequestParam(name = "sido") String sido,
@@ -254,10 +255,12 @@ public class MainController {
         System.out.println("sigunguMap"+sigunguMap);
 
         List<HashMap<String, Object>> monthBestList = mainService.monthBest(sido,gugun);
+        model.addAttribute("monthBestList", monthBestList);
         System.out.println("monthBestList"+monthBestList);
         return sigunguMap;
-    }
+    }*/
 
+    // 초기 데이터를 가져오는 엔드포인트
     @GetMapping(value = "initialData", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, List<String>> getInitialData() throws Exception {
@@ -265,12 +268,12 @@ public class MainController {
         return sigunguMap;
     }
 
-    @GetMapping("select3?sido={sido}&gugun={gugun}")
+    /*@GetMapping("select3?sido={sido}&gugun={gugun}")
     public String detail(@RequestParam(name = "sido") String sido,
                          @RequestParam(name = "gugun") String gugun){
         List<HashMap<String, Object>> monthBestList = mainService.monthBest(sido,gugun);
         return "main/imsi";
-    }
+    }*/
 
 
 }

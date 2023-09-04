@@ -74,13 +74,13 @@
 
     <select id="gugunList" resultType="String" parameterType="String">
         <![CDATA[
-		select gugun
+		select distinct gugun
         from hotplace
         where sido=#{sido}
 		]]>
     </select>
 
-    <select id="monthBest" resultType="String" parameterType="com.yumpro.ddogo.main.dto.SidogugunDTO">
+    <select id="monthBest" resultType="com.yumpro.ddogo.main.dto.SidogugunDTO" parameterType="String">
         <![CDATA[
 		with ReviewAverages as (
         select hotplace_no, avg(emo_result) as avg_emo_result
@@ -94,7 +94,7 @@
         left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no
         where year(m.recom_date) = year(NOW()) AND month(m.recom_date) = month(NOW())
           and m.recom = 'Y'
-          and h.hotplace_cate_no = #{h.hotplace_cate_no}
+          and h.hotplace_cate_no = 1
           and h.sido=#{h.sido}
           and h.gugun=#{h.gugun}
         group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result

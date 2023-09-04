@@ -17,7 +17,9 @@ public interface MainRepository {
     public List<HashMap<String, Object>> cafejjim();
 
 
-    public List<String> getSelectList() throws DataAccessException;;
+    public List<String> getSelectList() throws DataAccessException;
 
-    public List<String> gugunList(String sido) throws DataAccessException;;
+    public List<String> gugunList(String sido) throws DataAccessException;
+
+    public List<HashMap<String, Object>> monthBest(String sido,String gugugn);
 }

@@ -20,6 +20,20 @@
 
     </div>
 </div>
+
+<div id="result">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>가게이름</th>
+            <th>감정평균</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 <div th:if="${monthBestList}">
     <h2>Month's Best List</h2>
     <ul>
@@ -100,7 +114,7 @@
 
         // 서버로 요청을 보내는 XMLHttpRequest 객체 생성
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://localhost/select3?sido=" + selectedSido + "&gugun=" + selectedGugun, true);
+            xhr.open("post", "http://localhost/select3?sido=" + selectedSido + "&gugun=" + selectedGugun, true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
             xhr.onload = function () {

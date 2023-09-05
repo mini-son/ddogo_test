@@ -80,7 +80,7 @@
 		]]>
     </select>
 
-    <select id="monthBest" resultType="com.yumpro.ddogo.main.dto.SidogugunDTO" parameterType="String">
+    <select id="monthBest" resultType="hashmap" parameterType="String">
         <![CDATA[
 		with ReviewAverages as (
         select hotplace_no, avg(emo_result) as avg_emo_result
@@ -95,8 +95,8 @@
         where year(m.recom_date) = year(NOW()) AND month(m.recom_date) = month(NOW())
           and m.recom = 'Y'
           and h.hotplace_cate_no = 1
-          and h.sido=#{h.sido}
-          and h.gugun=#{h.gugun}
+          and h.sido=#{sido}
+          and h.gugun=#{gugun}
         group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
         order by jjim desc
         limit 3

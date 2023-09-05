@@ -154,7 +154,7 @@ public class MainController {
 
 
     //-----------------test2 버튼 만들기-----------------
-    @GetMapping(value = "select3")
+  /*  @GetMapping(value = "select3")
     public String select_ajax_test2(HttpServletResponse response,
                                     Model model) throws Exception {
 
@@ -216,7 +216,7 @@ public class MainController {
         model.addAttribute("monthBestList", monthBestList);
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
-    }
+    }*/
 
 
 

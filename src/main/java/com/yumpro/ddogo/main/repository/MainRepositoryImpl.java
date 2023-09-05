@@ -49,4 +49,5 @@ public class MainRepositoryImpl implements MainRepository{
     public List<HashMap<String, Object>> monthBest(Map<String, Object> paramMap) {
         return sqlSession.selectList("main.monthBest", paramMap);
     }
+
 }

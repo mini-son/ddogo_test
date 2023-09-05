@@ -42,10 +42,19 @@ public class MainService{
     }
 
 
-    public List<HashMap<String, Object>> monthBest(String sido, String gugugn) {
+  /*  public List<HashMap<String, Object>> monthBest(String sido, String gugugn) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("sido", sido);
         paramMap.put("gugun", gugugn);
+
+        return mainRepository.monthBest(paramMap);
+    }*/
+
+    public List<HashMap<String, Object>> monthBest(String sido, String gugugn,int hotplace_cate_no) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("sido", sido);
+        paramMap.put("gugun", gugugn);
+        paramMap.put("hotplace_cate_no", hotplace_cate_no);
 
         return mainRepository.monthBest(paramMap);
     }

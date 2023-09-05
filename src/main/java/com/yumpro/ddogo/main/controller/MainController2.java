@@ -54,7 +54,7 @@ public class MainController2 {
         System.out.println("sigunguMap_test3" + sigunguMap);
 
 
-        return "main/select40";
+        return "main/select41";
     }
 
 

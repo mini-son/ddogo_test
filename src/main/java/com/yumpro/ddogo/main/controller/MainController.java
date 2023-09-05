@@ -152,9 +152,8 @@ public class MainController {
     }
 
 
-
     //-----------------test2 버튼 만들기-----------------
-  /*  @GetMapping(value = "select3")
+    @GetMapping(value = "select4")
     public String select_ajax_test2(HttpServletResponse response,
                                     Model model) throws Exception {
 
@@ -181,7 +180,7 @@ public class MainController {
         System.out.println("sigunguMap_test3" + sigunguMap);
 
 
-        return "main/select38";
+        return "main/select41";
     }
 
 
@@ -195,18 +194,20 @@ public class MainController {
 
 
     //-----------------------------------
-    @PostMapping(value = "select3", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "select4", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> sidogugunPost(
             @RequestParam(name = "sido") String selectedSido,
             @RequestParam(name = "gugun") String selectedGugun,
+            @RequestParam(name = "hotplace_cate_no") int selectedCategory,
             Model model) throws Exception {
         System.out.println("post진입");
         System.out.println("selectedSido=" + selectedSido);
         System.out.println("selectedGugun=" + selectedGugun);
+        System.out.println("hotplace_cate_no=" + selectedCategory);
 
         // mainService.monthBest(selectedSido, selectedGugun)을 실행하여 원하는 데이터를 가져옴
-        List<HashMap<String, Object>> monthBestList = mainService.monthBest(selectedSido, selectedGugun);
+        List<HashMap<String, Object>> monthBestList = mainService.monthBest(selectedSido, selectedGugun, selectedCategory);
         System.out.println("monthBestList=" + monthBestList);
 
         // JSON 응답 객체 생성
@@ -216,7 +217,8 @@ public class MainController {
         model.addAttribute("monthBestList", monthBestList);
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
-    }*/
+    }
+
 
 
 

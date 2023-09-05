@@ -125,30 +125,12 @@ sendButton.addEventListener("click", function () {
 
                 // 받은 데이터를 화면에 표시하는 로직 추가
                 var resultDiv = document.getElementById("result");
+                var tbody = resultDiv.querySelector("tbody");
 
                 // 이전 결과를 초기화
                 resultDiv.innerHTML = '';
 
-                // 데이터를 테이블에 표시
-                var table = document.createElement("table");
-                table.border = "1";
-
-                // 테이블 헤더 생성
-                var thead = document.createElement("thead");
-                var headerRow = document.createElement("tr");
-                var header1 = document.createElement("th");
-                header1.textContent = "가게이름";
-                var header2 = document.createElement("th");
-                header2.textContent = "감정평균";
-                headerRow.appendChild(header1);
-                headerRow.appendChild(header2);
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
-
-                // 테이블 바디 생성
-                var tbody = document.createElement("tbody");
-
-                // 데이터 행 추가
+               // 데이터 행 추가
                 for (var i = 0; i < response.length; i++) {
                     var dataRow = document.createElement("tr");
                     var cell1 = document.createElement("td");
@@ -159,9 +141,6 @@ sendButton.addEventListener("click", function () {
                     dataRow.appendChild(cell2);
                     tbody.appendChild(dataRow);
                 }
-
-                table.appendChild(tbody);
-                resultDiv.appendChild(table);
             } catch (error) {
                 console.error("JSON 파싱 오류:", error);
             }

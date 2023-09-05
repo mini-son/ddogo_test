@@ -80,7 +80,7 @@
 		]]>
     </select>
 
-    <select id="monthBest" resultType="hashmap" parameterType="String">
+    <select id="monthBest" resultType="hashmap" parameterType="hashmap">
         <![CDATA[
 		with ReviewAverages as (
         select hotplace_no, avg(emo_result) as avg_emo_result

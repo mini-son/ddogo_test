@@ -77,10 +77,12 @@ public class MainController2 {
         System.out.println("selectedSido="+selectedSido);
         System.out.println("selectedGugun="+selectedGugun);
         response.setContentType("text/html; charset=UTF-8");
+        //response.setContentType("application/json; charset=UTF-8");
         PrintWriter out = response.getWriter();
         // mainService.monthBest(selectedSido, selectedGugun)을 실행하여 원하는 데이터를 가져옴
         List<HashMap<String, Object>> monthBestList=mainService.monthBest(selectedSido,selectedGugun);
-        JSONObject obj2 = new JSONObject();
+        System.out.println("monthBestList="+monthBestList);
+       /* JSONObject obj2 = new JSONObject();
         JSONArray monthBestListArr = new JSONArray(); //배열준비
         for( int i=0; i<monthBestList.size(); i++ ){
             JSONArray jsonArr2 = new JSONArray(); //배열준비
@@ -91,9 +93,10 @@ public class MainController2 {
 
         String jsonStr2 = obj2.toString();
         System.out.println("jsonStr2 ="+jsonStr2); //콘솔출력.확인용
-        out.print(jsonStr2); //client로 보내기
+        out.print(jsonStr2); //client로 보내기*/
 
         return null;
+        //return new ResponseEntity<>(monthBestList, HttpStatus.OK);
     }
   /*  @PostMapping(value = "select3")
     public ResponseEntity<String> sidogugunPost(HttpServletResponse response,

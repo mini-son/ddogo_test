@@ -1,88 +1,82 @@
 <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content" class="container my-3">
-    <div class="container px-4">
-        <div class="row gx-5">
-            <!-- 첫 번째 컬럼 -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">전국 오늘의 맛집</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li th:each="eatjjim, idx : ${eatjjim}" class="list-group-item">
-                            <span th:text="${idx.index + 1}"></span>. <span th:text="${eatjjim.hotplace_name}"></span>
-                            <span class="badge badge-primary float-right" th:if="${eatjjim.avg_emo_result != null}" th:text="${eatjjim.avg_emo_result}"></span>
-                            <span class="badge badge-secondary float-right" th:if="${eatjjim.avg_emo_result == null}">N/A</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="card-title">전국 오늘의 맛집</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li th:each="eatjjim, idx : ${eatjjim}" class="list-group-item">
+                <span th:text="${idx.index + 1}"></span>. <span th:text="${eatjjim.hotplace_name}"></span>
+                <span class="badge badge-primary float-right" th:if="${eatjjim.avg_emo_result != null}" th:text="${eatjjim.avg_emo_result}"></span>
+                <span class="badge badge-secondary float-right" th:if="${eatjjim.avg_emo_result == null}">N/A</span>
+            </li>
+        </ul>
+    </div>
 
-            <!-- 두 번째 컬럼 -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">전국 오늘의 카페</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li th:each="cafejjim, idx : ${cafejjim}" class="list-group-item">
-                            <span th:text="${idx.index + 1}"></span>. <span th:text="${cafejjim.hotplace_name}"></span>
-                            <span class="badge badge-primary float-right" th:text="${cafejjim.avg_emo_result}"></span>
-                        </li>
-                    </ul>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="card-title">전국 오늘의 카페</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li th:each="cafejjim, idx : ${cafejjim}" class="list-group-item">
+                <span th:text="${idx.index + 1}"></span>. <span th:text="${cafejjim.hotplace_name}"></span>
+                <span class="badge badge-primary float-right" th:text="${cafejjim.avg_emo_result}"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-header">Header</div>
+        <div class="card-body text">
+            <h5 class="card-title">Danger card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+
+
+    <!-- 시도 선택 폼과 검색 버튼 -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">이번달 Best</h5>
+        </div>
+        <div class="card-body">
+            <form id="frm">
+                <div class="form-group">
+                    <label for="sido">시/도</label>
+                    <select class="form-control" name="sido" id="sido">
+                        <option value="">선택하세요</option>
+                        <!-- 시도 목록을 Thymeleaf 반복문을 사용하여 출력 -->
+                    </select>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="gugun">구/군</label>
+                    <select class="form-control" name="gugun" id="gugun">
+                        <option value="">선택하세요</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">카테고리</label>
+                    <select class="form-control" name="category" id="category">
+                        <option value="1">음식점</option>
+                        <option value="2">카페</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-outline-danger" id="sendButton">검색</button>
+            </form>
         </div>
     </div>
 
-
-<!-- 시도 select -->
-<br/>
-<div>이번달 Best</div>
-<div>
-    <div>
-        <!-- 시도와 구군 선택 상자 및 버튼 -->
-        <form id="frm">
-            <label for="sido">시/도</label>
-            <select name="sido" id="sido">
-                <option value="">선택하세요</option>
-                <!-- 시도 목록을 Thymeleaf 반복문을 사용하여 출력 -->
-            </select>
-
-            <label for="gugun">구/군</label>
-            <select name="gugun" id="gugun">
-                <option value="">선택하세요</option>
-            </select>
-
-            <label for="category">카테고리</label>
-            <select name="category" id="category">
-                <option value="1">음식점</option>
-                <option value="2">카페</option>
-            </select>
-
-
-        </form>
-        <button type="button" class="btn btn-outline-danger" id="sendButton">검색</button>
+    <!-- 검색 결과 카드 -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">검색 결과</h5>
+        </div>
+        <ul class="list-group list-group-flush" id="result">
+            <!-- 데이터는 JavaScript로 동적으로 추가 -->
+        </ul>
     </div>
 </div>
 
 
-<div id="result">
-    <table border="1">
-        <thead>
-        <tr>
-            <th>가게이름</th>
-            <th>리뷰온도</th>
-        </tr>
-        </thead>
-        <tbody id="tableBody">
-        <!-- 데이터는 JavaScript로 동적으로 추가 -->
-        </tbody>
-    </table>
-</div>
-
-</div>
 </html>
 
 <!-- 자바스크립트 -->

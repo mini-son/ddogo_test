@@ -1,41 +1,35 @@
 <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content" class="container my-3">
-    <div class="container px-4">
-        <div class="row gx-5">
-            <!-- 첫 번째 컬럼 -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">전국 오늘의 맛집</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li th:each="eatjjim, idx : ${eatjjim}" class="list-group-item">
-                            <span th:text="${idx.index + 1}"></span>. <span th:text="${eatjjim.hotplace_name}"></span>
-                            <span class="badge badge-primary float-right" th:if="${eatjjim.avg_emo_result != null}" th:text="${eatjjim.avg_emo_result}"></span>
-                            <span class="badge badge-secondary float-right" th:if="${eatjjim.avg_emo_result == null}">N/A</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 두 번째 컬럼 -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">전국 오늘의 카페</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li th:each="cafejjim, idx : ${cafejjim}" class="list-group-item">
-                            <span th:text="${idx.index + 1}"></span>. <span th:text="${cafejjim.hotplace_name}"></span>
-                            <span class="badge badge-primary float-right" th:text="${cafejjim.avg_emo_result}"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<table border="1">
+    <tr>
+        <th>순위</th>
+        <th>전국 오늘의 맛집</th>
+        <th>리뷰 온도</th>
+        <th>오늘의 찜수</th>
+    </tr>
+    <tr th:each="eatjjim, idx : ${eatjjim}">
+        <td th:text="${idx.index + 1}"></td> <!-- 순위 출력 -->
+        <td th:text="${eatjjim.hotplace_name}"></td>
+        <td th:text="${eatjjim.avg_emo_result}"></td>
+        <td th:text="${eatjjim.jjim}"></td>
+    </tr>
+</table>
+<br/>
+<table border="1">
+    <tr>
+        <th>순위</th>
+        <th>전국 오늘의 카페</th>
+        <th>리뷰 온도</th>
+        <th>오늘의 찜수</th>
+    </tr>
+    <tr th:each="cafejjim, idx : ${cafejjim}">
+        <td th:text="${idx.index + 1}"></td> <!-- 순위 출력 -->
+        <td th:text="${cafejjim.hotplace_name}"></td>
+        <td th:text="${cafejjim.avg_emo_result}"></td>
+        <td th:text="${cafejjim.jjim}"></td>
+    </tr>
+</table>
 
 <!-- 시도 select -->
 <br/>

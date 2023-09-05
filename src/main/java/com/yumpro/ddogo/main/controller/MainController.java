@@ -38,7 +38,7 @@ public class MainController {
         int mapno = mainService.mapno();
 
         System.out.println("mapno="+mapno);
-        return "main/test";
+        return "main/test3";
     }
 
     //오늘 전국 베스트 찜
@@ -59,7 +59,7 @@ public class MainController {
 
 
 
-    //---------------한번에 main4.html-------------------
+    //---------------한번에 main.html-------------------
     //오늘 전국 베스트 찜
     @GetMapping(value = "main")
     public String main(HttpServletResponse response,Model model) throws Exception {
@@ -97,8 +97,8 @@ public class MainController {
         model.addAttribute("sigunguMap", sigunguMap);
         System.out.println("sigunguMap_test3" + sigunguMap);
 
-        return "main/main4";
-
+        //return "main/main5";
+        return "main/test6";
     }
 
     // 초기 데이터를 가져오는 엔드포인트

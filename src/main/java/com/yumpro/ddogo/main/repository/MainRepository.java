@@ -21,7 +21,6 @@ public interface MainRepository {
 
     public List<String> gugunList(String sido) throws DataAccessException;
 
-    //public List<HashMap<String, Object>> monthBest(String sido,String gugugn);
     public List<HashMap<String, Object>> monthBest(Map<String, Object> paramMap);
 
 }

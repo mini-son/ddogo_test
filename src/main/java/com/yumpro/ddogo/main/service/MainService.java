@@ -41,10 +41,6 @@ public class MainService{
         return sigunguMap;
     }
 
-  /*  public List<HashMap<String, Object>> monthBest(String sido,String gugugn){
-        List<HashMap<String, Object>> monthBestList= mainRepository.monthBest(sido,gugugn);
-        return monthBestList;
-    }*/
 
     public List<HashMap<String, Object>> monthBest(String sido, String gugugn) {
         Map<String, Object> paramMap = new HashMap<>();

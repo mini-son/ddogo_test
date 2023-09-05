@@ -44,11 +44,6 @@ public class MainRepositoryImpl implements MainRepository{
         return gugunList;
     }
 
-  /*  @Override
-    public List<HashMap<String, Object>> monthBest(String sido,String gugugn){
-        List<HashMap<String, Object>> monthBestList = sqlSession.selectList("main.monthBest");
-        return monthBestList;
-    }*/
 
     @Override
     public List<HashMap<String, Object>> monthBest(Map<String, Object> paramMap) {

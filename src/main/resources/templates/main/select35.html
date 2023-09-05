@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div id="result">
+<!--<div id="result">
     <table border="1">
         <thead>
         <tr>
@@ -41,8 +41,24 @@
             <span th:text="${monthBestList.hotplace_name}"></span>
         </li>
     </ul>
+</div>-->
+<div id="result">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>가게이름</th>
+            <th>감정평균</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf로 동적으로 데이터를 추가할 위치 -->
+        <tr th:each="entry : ${monthBestList}">
+            <td th:text="${entry.hotplace_name}"></td>
+            <td th:text="${entry.avg_emo_result}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
 </html>
 <!-- 자바스크립트 -->
 <script layout:fragment="script">
@@ -117,38 +133,38 @@ sendButton.addEventListener("click", function () {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost/select3", true);
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);
+   xhr.onload = function () {
+    if (xhr.status === 200) {
+        try {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
 
-                // 받은 데이터를 화면에 표시하는 로직 추가
-                var resultDiv = document.getElementById("result");
-                var tbody = resultDiv.querySelector("tbody");
+            // 받은 데이터를 화면에 표시하는 로직 추가
+            var resultDiv = document.getElementById("result");
+            var tbody = resultDiv.querySelector("tbody");
 
-                // 이전 결과를 초기화
-                resultDiv.innerHTML = '';
+            // 이전 결과를 초기화
+            tbody.innerHTML = '';
 
-               // 데이터 행 추가
-                for (var i = 0; i < response.length; i++) {
-                    var dataRow = document.createElement("tr");
-                    var cell1 = document.createElement("td");
-                    cell1.textContent = response[i].monthBestList.hotplace_name;
-                    var cell2 = document.createElement("td");
-                    cell2.textContent = response[i].monthBestList.avg_emo_result;
-                    dataRow.appendChild(cell1);
-                    dataRow.appendChild(cell2);
-                    tbody.appendChild(dataRow);
-                }
-            } catch (error) {
-                console.error("JSON 파싱 오류:", error);
+            // 데이터 행 추가
+            for (var i = 0; i < response.length; i++) {
+                var dataRow = document.createElement("tr");
+                var cell1 = document.createElement("td");
+                cell1.textContent = response[i].hotplace_name;
+                var cell2 = document.createElement("td");
+                cell2.textContent = response[i].avg_emo_result;
+                dataRow.appendChild(cell1);
+                dataRow.appendChild(cell2);
+                tbody.appendChild(dataRow);
             }
-        } else {
-            console.log("Error:", xhr.statusText);
-            alert("no~" + xhr.statusText);
+        } catch (error) {
+            console.error("JSON 파싱 오류:", error);
         }
-    };
+    } else {
+        console.log("Error:", xhr.statusText);
+        alert("no~" + xhr.statusText);
+    }
+};
 
     xhr.onerror = function () {
         console.log("Network Error");

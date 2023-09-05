@@ -55,7 +55,7 @@ public class MainController2 {
         System.out.println("sigunguMap_test3" + sigunguMap);
 
 
-        return "main/select34";
+        return "main/select38";
     }
 
 
@@ -69,10 +69,37 @@ public class MainController2 {
 
 
     //-----------------------------------
-    @PostMapping(value = "select3")
+    @PostMapping(value = "select3", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> sidogugunPost(
+            @RequestParam(name = "sido") String selectedSido,
+            @RequestParam(name = "gugun") String selectedGugun,
+            Model model) throws Exception {
+        System.out.println("post진입");
+        System.out.println("selectedSido=" + selectedSido);
+        System.out.println("selectedGugun=" + selectedGugun);
+
+        // mainService.monthBest(selectedSido, selectedGugun)을 실행하여 원하는 데이터를 가져옴
+        List<HashMap<String, Object>> monthBestList = mainService.monthBest(selectedSido, selectedGugun);
+        System.out.println("monthBestList=" + monthBestList);
+
+        // JSON 응답 객체 생성
+        Map<String, Object> responseMap = new HashMap<>();
+        System.out.println("responseMap"+responseMap);
+        responseMap.put("monthBestList", monthBestList);
+        model.addAttribute("monthBestList", monthBestList);
+
+        return new ResponseEntity<>(responseMap, HttpStatus.OK);
+    }
+
+
+
+
+  /*  @PostMapping(value = "select3")
     public ResponseEntity<String> sidogugunPost(HttpServletResponse response,
                                                 @RequestParam(name = "sido") String selectedSido,
-                                                @RequestParam(name = "gugun") String selectedGugun) throws Exception {
+                                                @RequestParam(name = "gugun") String selectedGugun,
+                                                Model model) throws Exception {
         System.out.println("post진입");
         System.out.println("selectedSido="+selectedSido);
         System.out.println("selectedGugun="+selectedGugun);
@@ -82,7 +109,7 @@ public class MainController2 {
         // mainService.monthBest(selectedSido, selectedGugun)을 실행하여 원하는 데이터를 가져옴
         List<HashMap<String, Object>> monthBestList=mainService.monthBest(selectedSido,selectedGugun);
         System.out.println("monthBestList="+monthBestList);
-       /* JSONObject obj2 = new JSONObject();
+       *//* JSONObject obj2 = new JSONObject();
         JSONArray monthBestListArr = new JSONArray(); //배열준비
         for( int i=0; i<monthBestList.size(); i++ ){
             JSONArray jsonArr2 = new JSONArray(); //배열준비
@@ -93,11 +120,29 @@ public class MainController2 {
 
         String jsonStr2 = obj2.toString();
         System.out.println("jsonStr2 ="+jsonStr2); //콘솔출력.확인용
-        out.print(jsonStr2); //client로 보내기*/
+        out.print(jsonStr2); //client로 보내기*//*
+
+        model.addAttribute("monthBestList", monthBestList);
+        // JSON 응답 객체 생성
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("monthBestList", monthBestList);
 
         return null;
         //return new ResponseEntity<>(monthBestList, HttpStatus.OK);
-    }
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
   /*  @PostMapping(value = "select3")
     public ResponseEntity<String> sidogugunPost(HttpServletResponse response,
             @RequestParam(name = "sido") String selectedSido,

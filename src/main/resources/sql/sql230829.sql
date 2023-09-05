@@ -399,10 +399,30 @@ group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
 order by jjim desc
 limit 3;
 
+
+with ReviewAverages as (
+select hotplace_no, avg(emo_result) as avg_emo_result
+from ddogo.emoreview
+group by hotplace_no
+)
+select h.hotplace_name, h.hotplace_no, count(m.map_no) as jjim,
+	   format(ra.avg_emo_result,2) as avg_emo_result
+from ddogo.hotplace h
+left join ddogo.mymap m on h.hotplace_no = m.hotplace_no
+left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no
+where year(m.recom_date) = year(NOW()) AND month(m.recom_date) = month(NOW())
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 1
+  and h.sido='경기'
+  and h.gugun='광주시'
+group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
+order by jjim desc
+limit 3;
+
 --
 SELECT
-   m.map_no, h.hotplace_no, h.sido, h.gugun, h.address, h.lat, h.lng,
-    h.hotplace_name, m.recom, m.map_memo, e.review, e.emo_result
+   m.map_no, h.hotplace_no, h.sido, h.gugun, h.address,
+    h.hotplace_name, m.recom,m.recom_date, m.map_memo, e.review, e.emo_result, h.lat, h.lng
 FROM
     ddogo.hotplace h
 JOIN

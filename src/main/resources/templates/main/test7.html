@@ -100,6 +100,7 @@
         <table border="1">
             <thead>
             <tr>
+                <th>순위</th>
                 <th>가게이름</th>
                 <th>리뷰온도</th>
             </tr>
@@ -210,10 +211,17 @@
                          for (var i = 0; i < response.monthBestList.length; i++) {
                              var entry = response.monthBestList[i];
                              var row = document.createElement("tr");
+
+                             // 순위를 표시하는 열 추가
+                             var rankCell = document.createElement("td");
+                             rankCell.textContent = i + 1; // 순위 계산 (0부터 시작하므로 +1)
+
                              var nameCell = document.createElement("td");
                              var avgCell = document.createElement("td");
                              nameCell.textContent = entry.hotplace_name;
                              avgCell.textContent = entry.avg_emo_result;
+
+                             row.appendChild(rankCell);
                              row.appendChild(nameCell);
                              row.appendChild(avgCell);
                              tableBody.appendChild(row);

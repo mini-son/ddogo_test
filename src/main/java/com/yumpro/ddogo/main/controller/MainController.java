@@ -98,7 +98,7 @@ public class MainController {
         System.out.println("sigunguMap_test3" + sigunguMap);
 
         //return "main/main5";
-        return "main/test6";
+        return "main/test7";
     }
 
     // 초기 데이터를 가져오는 엔드포인트

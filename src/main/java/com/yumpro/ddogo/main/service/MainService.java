@@ -50,9 +50,9 @@ public class MainService{
         return mainRepository.monthBest(paramMap);
     }
 
-    public String getAddress(int hotplace_no){
+    /*public String getAddress(int hotplace_no){
         return mainRepository.getAddress(hotplace_no);
-    }
+    }*/
 
 
 }

@@ -23,6 +23,6 @@ public interface MainRepository {
 
     public List<HashMap<String, Object>> monthBest(Map<String, Object> paramMap);
 
-    public String getAddress(int hotplace_no);
+    //public String getAddress(int hotplace_no);
 
 }

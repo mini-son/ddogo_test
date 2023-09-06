@@ -49,10 +49,10 @@ public class MainRepositoryImpl implements MainRepository{
         return sqlSession.selectList("main.monthBest", paramMap);
     }
 
-    @Override
+   /* @Override
     public String getAddress(int hotplace_no) {
         return sqlSession.selectOne("main.getAddress",hotplace_no);
-    }
+    }*/
 
 
 }

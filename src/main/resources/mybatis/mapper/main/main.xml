@@ -11,7 +11,7 @@
 		]]>
     </select>
 
-    <!-- hotplace_no로 감정분석결과평균 불러오기 -->
+ <!--   &lt;!&ndash; hotplace_no로 감정분석결과평균 불러오기 &ndash;&gt;
     <select id="emoAnalAvg" resultType="double" parameterType="int">
         <![CDATA[
         select avg(emoreview.emo_result)
@@ -20,14 +20,14 @@
 		]]>
     </select>
 
-    <!-- hotplace_no로 주소 불러오기 -->
+    &lt;!&ndash; hotplace_no로 주소 불러오기 &ndash;&gt;
     <select id="getAddress" resultType="String" parameterType="int">
         <![CDATA[
         select address
         from ddogo.hotplace
         where hotplace_no=#{hotplace_no}
 		]]>
-    </select>
+    </select>-->
 
 
     <!--오늘 전국 베스트 찜(음식점)-->

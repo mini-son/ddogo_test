@@ -74,6 +74,7 @@
 		]]>
     </select>
 
+    <!--sido가져오기-->
     <select id="sidogugun" resultType="String">
         <![CDATA[
 		select distinct sido
@@ -81,6 +82,7 @@
 		]]>
     </select>
 
+    <!--sido값으로 gugun가져오기-->
     <select id="gugunList" resultType="String" parameterType="String">
         <![CDATA[
 		select distinct gugun
@@ -89,7 +91,7 @@
 		]]>
     </select>
 
-
+    <!--월별베스트-->
     <select id="monthBest" resultType="hashmap" parameterType="hashmap">
         <![CDATA[
 		with ReviewAverages as (

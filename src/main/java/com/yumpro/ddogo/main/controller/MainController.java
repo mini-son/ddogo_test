@@ -98,8 +98,8 @@ public class MainController {
         model.addAttribute("sigunguMap", sigunguMap);
         System.out.println("sigunguMap_test3" + sigunguMap);
 
-        return "main/main5";
-        //return "main/test8";
+        //return "main/main5";
+        return "main/test8";
     }
 
     // 초기 데이터를 가져오는 엔드포인트

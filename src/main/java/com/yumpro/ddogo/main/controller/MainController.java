@@ -99,13 +99,14 @@ public class MainController {
         System.out.println("sigunguMap_test3" + sigunguMap);
 
         //return "main/main5";
-        return "main/test10";
+        return "main/test13";
     }
 
     // 초기 데이터를 가져오는 엔드포인트
     @GetMapping(value = "initialData", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, List<String>> getInitialData() throws Exception {
+        System.out.println("initialData진입");
         Map<String, List<String>> sigunguMap = mainService.getsidogungu();
         return sigunguMap;
     }

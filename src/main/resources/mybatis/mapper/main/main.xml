@@ -20,6 +20,15 @@
 		]]>
     </select>
 
+    <!-- hotplace_no로 주소 불러오기 -->
+    <select id="getAddress" resultType="String" parameterType="int">
+        <![CDATA[
+        select address
+        from ddogo.hotplace
+        where hotplace_no=#{hotplace_no}
+		]]>
+    </select>
+
 
     <!--오늘 전국 베스트 찜(음식점)-->
     <select id="allBestEatJjim" resultType="com.yumpro.ddogo.main.dto.BestJjimDTO">
@@ -30,7 +39,7 @@
         group by hotplace_no
         )
         select h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
-               format(ra.avg_emo_result,2) as avg_emo_result
+               format(ra.avg_emo_result,2) as avg_emo_result,h.address
         from hotplace h
         left join mymap m on h.hotplace_no = m.hotplace_no
         left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no
@@ -52,7 +61,7 @@
         group by hotplace_no
         )
         select h.hotplace_name, h.hotplace_no, COUNT(m.map_no) as jjim,
-               format(ra.avg_emo_result,2) as avg_emo_result
+               format(ra.avg_emo_result,2) as avg_emo_result,h.address
         from hotplace h
         left join mymap m on h.hotplace_no = m.hotplace_no
         left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no

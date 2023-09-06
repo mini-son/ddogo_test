@@ -2,6 +2,7 @@ package com.yumpro.ddogo.main.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yumpro.ddogo.main.dto.BestJjimDTO;
 import com.yumpro.ddogo.main.dto.SidogugunDTO;
 import com.yumpro.ddogo.main.service.MainService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,7 +63,7 @@ public class MainController {
     //---------------한번에 main.html-------------------
     //오늘 전국 베스트 찜
     @GetMapping(value = "main")
-    public String main(HttpServletResponse response,Model model) throws Exception {
+    public String main(HttpServletResponse response,BestJjimDTO bestJjimDTO,Model model) throws Exception {
         //일별 베스트
         //맛집
         List<HashMap<String, Object>> eatjjim = mainService.eatjjim();
@@ -70,9 +71,12 @@ public class MainController {
         List<HashMap<String, Object>> cafejjim = mainService.cafejjim();
         System.out.println("eatjjim"+eatjjim);
         System.out.println("cafejjim"+cafejjim);
+        String address = mainService.getAddress(bestJjimDTO.getHotplace_no());
+        System.out.println("address"+address);
 
         model.addAttribute("cafejjim",cafejjim);
         model.addAttribute("eatjjim",eatjjim);
+        model.addAttribute("address",address);
 
         //월별베스트
         Map<String, List<String>> sigunguMap = mainService.getsidogungu();
@@ -97,8 +101,8 @@ public class MainController {
         model.addAttribute("sigunguMap", sigunguMap);
         System.out.println("sigunguMap_test3" + sigunguMap);
 
-        //return "main/main5";
-        return "main/test8";
+        return "main/main5";
+        //return "main/test8";
     }
 
     // 초기 데이터를 가져오는 엔드포인트

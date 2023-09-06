@@ -41,7 +41,6 @@ public class MainService{
         return sigunguMap;
     }
 
-
     public List<HashMap<String, Object>> monthBest(String sido, String gugugn,int hotplace_cate_no) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("sido", sido);
@@ -49,6 +48,10 @@ public class MainService{
         paramMap.put("hotplace_cate_no", hotplace_cate_no);
 
         return mainRepository.monthBest(paramMap);
+    }
+
+    public String getAddress(int hotplace_no){
+        return mainRepository.getAddress(hotplace_no);
     }
 
 

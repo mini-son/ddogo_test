@@ -44,10 +44,15 @@ public class MainRepositoryImpl implements MainRepository{
         return gugunList;
     }
 
-
     @Override
     public List<HashMap<String, Object>> monthBest(Map<String, Object> paramMap) {
         return sqlSession.selectList("main.monthBest", paramMap);
     }
+
+    @Override
+    public String getAddress(int hotplace_no) {
+        return sqlSession.selectOne("main.getAddress",hotplace_no);
+    }
+
 
 }

@@ -109,7 +109,7 @@
     <div id="result" class="card p-2 mb-2">
         <div class="mt-1" style="padding: 15px;">
             <div class="badge" style="display: inline-block; margin-right: 10px;">
-                <span >순위</span>
+                <span>순위</span>
             </div>
             <h6 class="heading" style="display: inline-block;">가게이름</h6>
             <div class="ms-2 c-details">
@@ -257,7 +257,7 @@
                                 rankBadge.textContent = "순위";
 
                                 var rankSpan = document.createElement("span");
-                                rankSpan.textContent = i + 1; // 순위 계산 (0부터 시작하므로 +1)
+                                rankSpan.textContent = "베스트 "+ (i + 1); // 순위 계산 (0부터 시작하므로 +1)
 
                                 rankBadge.appendChild(rankSpan);
 

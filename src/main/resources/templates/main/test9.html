@@ -69,30 +69,32 @@
     <!-- 시도 select -->
     <br/>
     <div>이번달 Best</div>
-    <div>
-        <div>
-            <!-- 시도와 구군 선택 상자 및 버튼 -->
-            <form id="frm">
-                <label for="sido">시/도</label>
-                <select name="sido" id="sido">
-                    <option value="">선택하세요</option>
-                    <!-- 시도 목록을 Thymeleaf 반복문을 사용하여 출력 -->
-                </select>
-
+    <div class="container mt-2 mb-2">
+        <div class="row">
+            <div class="col-md-3">
+                <!--<form id="frm">-->
+                    <label for="sido">시/도</label>
+                    <select name="sido" id="sido" class="form-select">
+                        <option value="">선택하세요</option>
+                    </select>
+            </div>
+            <div class="col-md-3">
                 <label for="gugun">구/군</label>
-                <select name="gugun" id="gugun">
+                <select name="gugun" id="gugun" class="form-select">
                     <option value="">선택하세요</option>
                 </select>
-
+            </div>
+            <div class="col-md-3">
                 <label for="category">카테고리</label>
-                <select name="category" id="category">
+                <select name="category" id="category" class="form-select">
                     <option value="1">음식점</option>
                     <option value="2">카페</option>
                 </select>
-
-
-            </form>
-            <button type="button" class="btn btn-outline-danger" id="sendButton">검색</button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-outline-danger" id="sendButton">검색</button>
+            </div>
+            <!--</form>-->
         </div>
     </div>
 

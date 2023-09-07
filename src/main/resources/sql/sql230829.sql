@@ -210,7 +210,25 @@ where datediff(m.recom_date, now()) = 0
   and m.recom = 'Y'
   and h.hotplace_cate_no = 1
 group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
-order by jjim desc
+order by jjim desc,avg_emo_result desc
+limit 3;
+
+-- 
+with ReviewAverages as (
+    select hotplace_no, avg(emo_result) as avg_emo_result
+    from ddong.emoreview
+    group by hotplace_no
+)
+select h.hotplace_name, h.hotplace_no, count(m.map_no) as jjim,
+       format(ra.avg_emo_result,2) as avg_emo_result
+from ddong.hotplace h
+left join ddong.mymap m on h.hotplace_no = m.hotplace_no
+left join ReviewAverages ra on h.hotplace_no = ra.hotplace_no
+where datediff(m.recom_date, now()) = 0
+  and m.recom = 'Y'
+  and h.hotplace_cate_no = 1
+group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
+order by jjim desc,avg_emo_result desc
 limit 3;
 
 
@@ -416,7 +434,7 @@ where year(m.recom_date) = year(NOW()) AND month(m.recom_date) = month(NOW())
   and h.sido='서울'
   and h.gugun='강남구'
 group by h.hotplace_name, h.hotplace_no, ra.avg_emo_result
-order by jjim desc
+order by jjim ,avg_emo_result DESC
 limit 3;
 
 -- 한번에

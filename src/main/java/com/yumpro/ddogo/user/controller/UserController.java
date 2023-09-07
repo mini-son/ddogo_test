@@ -105,7 +105,8 @@ public class UserController {
 
     //로그인 화면(get)
     @GetMapping("/login")
-    public String loginForm(LoginVaildation loginVaildation) {
+    public String loginForm(LoginVaildation loginVaildation,Model model) {
+        model.addAttribute("showFooter", false);
         return "/user/loginForm";
     }
 
@@ -115,7 +116,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/loginForm";
         } else {
-            return "/allBestJjim";
+            return "/main";
         }
     }
 

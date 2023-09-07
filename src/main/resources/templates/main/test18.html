@@ -65,48 +65,48 @@
 </div>
 
 
-    <!-- 시도 select -->
-    <br/>
-    <div>이번달 Best</div>
-    <div class="container2 mt-1 mb-1">
+<!-- 시도 select -->
+<br/>
+<div>이번달 Best</div>
+<div class="container2 mt-1 mb-1">
 
-            <div>
-                <label for="sido" class="form-label" style="margin:10px;">시/도</label>
-            </div>
-            <div class="col-md-2" style="margin:10px;">
-                <select name="sido" id="sido" class="form-select">
-                    <option value="">선택하세요</option>
-                </select>
-            </div>
+        <div>
+            <label for="sido" class="form-label" style="margin:10px;">시/도</label>
+        </div>
+        <div class="col-md-2" style="margin:10px;">
+            <select name="sido" id="sido" class="form-select">
+                <option value="">선택하세요</option>
+            </select>
+        </div>
 
 
-            <div>
-                <label for="gugun" class="form-label" style="margin:10px;">구/군</label>
-            </div>
-            <div class="col-md-2" style="margin:10px;">
-                <select name="gugun" id="gugun" class="form-select">
-                    <option value="">선택하세요</option>
-                </select>
-            </div>
+        <div>
+            <label for="gugun" class="form-label" style="margin:10px;">구/군</label>
+        </div>
+        <div class="col-md-2" style="margin:10px;">
+            <select name="gugun" id="gugun" class="form-select">
+                <option value="">선택하세요</option>
+            </select>
+        </div>
 
-            <div>
-                <label for="category" class="form-label" style="margin:10px;">카테고리</label>
-            </div>
-            <div class="col-md-2" style="margin:10px;">
-                <select name="category" id="category" class="form-select">
-                    <option value="">선택하세요</option>
-                    <option value="1">음식점</option>
-                    <option value="2">카페</option>
-                </select>
-            </div>
+        <div>
+            <label for="category" class="form-label" style="margin:10px;">카테고리</label>
+        </div>
+        <div class="col-md-2" style="margin:10px;">
+            <select name="category" id="category" class="form-select">
+                <option value="">선택하세요</option>
+                <option value="1">음식점</option>
+                <option value="2">카페</option>
+            </select>
+        </div>
 
-            <div class="col-md-2">
-                <button type="button" class="btn btn-outline-danger" id="sendButton" style="margin:10px;">검색</button>
-            </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-danger" id="sendButton" style="margin:10px;">검색</button>
+        </div>
 
-    </div>
+</div>
 
-    <!--월별 Best-->
+    <!--월별 Best 자바스크립트에서 처리-->
     <div id="result" class="card p-2 mb-2" style="padding: 30px;">
         <div class="mx-3" style="padding: 30px;">
             <div class="badge" style="display: inline-block; margin-right: 10px;">
@@ -302,6 +302,10 @@
 
                                 // 결과 테이블에 카드 추가
                                 resultDiv.appendChild(card);
+
+                                // 수평선 추가
+                                var horizontalLine = document.createElement("hr");
+                                resultDiv.appendChild(horizontalLine);
                             }
                         }
                     } catch (error) {

@@ -1,0 +1,318 @@
+<html lang="ko" layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content" class="container my-3">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"/>
+<link rel="stylesheet" type="text/css"
+      href="/css/main/main.css" th:href="@{/css/main/main.css}" />
+
+
+<div class="container mt-2 mb-2">
+    <div class="row">
+        <div class="col-md-6" >
+        <h4 class="title" style="margin:20px;">오늘의 Best 음식점</h4>
+        <div th:each="eatjjim,  idx :${eatjjim}" class="card p-1 mb-2">
+                <div class="mt-1" style="padding: 20px;">
+                    <div class="badge" style="display: inline-block; margin-right: 10px;">
+                        <span th:text="'베스트 ' + (${idx.index + 1})">베스트</span>
+                    </div>
+                    <h5 class="heading" th:text="${eatjjim.hotplace_name}" style="display: inline-block;"></h5>
+                    <div class="ms-2 c-details">
+                        <span class="mb-0" th:text="${eatjjim.address}"></span>
+                    </div>
+                    <div class="mt-3">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" th:style="'width: ' + ${eatjjim.avg_emo_result} + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text1" th:text="'리뷰 온도 ' + ${eatjjim.avg_emo_result}+'°C'" style="float: left;"></span>
+                            <span class="text2" th:text="'오늘의 저장수 ' + ${eatjjim.jjim}" style="float: right;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-6">
+        <h4 class="title" style="margin:20px;">오늘의 Best 카페</h4>
+        <div th:each="cafejjim,  idx :${cafejjim}" class="card p-2 mb-2">
+                <div class="mt-1" style="padding: 15px;">
+                    <div class="badge" style="display: inline-block; margin-right: 10px;">
+                        <span th:text="'베스트 ' + (${idx.index + 1})">베스트</span>
+                    </div>
+                    <h5 class="heading" th:text="${cafejjim.hotplace_name}" style="display: inline-block;"></h5>
+                    <div class="ms-2 c-details">
+                        <span class="mb-0" th:text="${cafejjim.address}"></span>
+                    </div>
+                    <div class="mt-3">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" th:style="'width: ' + ${cafejjim.avg_emo_result} + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text1" th:text="'리뷰 온도 ' + ${cafejjim.avg_emo_result}+'°C'" style="float: left;"></span>
+                            <span class="text2" th:text="'오늘의 저장수 ' + ${cafejjim.jjim}" style="float: right;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br/>
+<br/>
+<!-- 시도 select -->
+<h4 class="title" style="margin-left:50px;">이번달 Best</h4>
+<div class="container2 mt-1 mb-1">
+        <div>
+            <label for="sido" class="form-label" style="margin:10px;">시/도</label>
+        </div>
+        <div class="col-md-2" style="margin:10px;">
+            <select name="sido" id="sido" class="form-select">
+                <option value="">선택하세요</option>
+            </select>
+        </div>
+        <div>
+            <label for="gugun" class="form-label" style="margin:10px;">구/군</label>
+        </div>
+        <div class="col-md-2" style="margin:10px;">
+            <select name="gugun" id="gugun" class="form-select">
+                <option value="">선택하세요</option>
+            </select>
+        </div>
+        <div>
+            <label for="category" class="form-label" style="margin:10px;">카테고리</label>
+        </div>
+        <div class="col-md-2" style="margin:10px;">
+            <select name="category" id="category" class="form-select">
+                <option value="">선택하세요</option>
+                <option value="1">음식점</option>
+                <option value="2">카페</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-danger" id="sendButton" style="margin:10px;">검색</button>
+        </div>
+</div>
+
+    <!--월별 Best 자바스크립트에서 처리-->
+    <div id="result" class="card p-2 mb-2" style="padding: 30px;">
+        <div class="mx-3" style="padding: 30px;">
+            <div class="badge" style="display: inline-block; margin-right: 10px;">
+                <span>순위</span>
+            </div>
+            <h6 class="heading" style="display: inline-block;">가게이름</h6>
+            <div class="ms-2 c-details">
+                <span class="mb-0"></span>
+            </div>
+            <div class="mt-3" style="width: 50%;">
+                    <div class="progress2">
+                        <div class="progress2-bar justify-content-center" role="progressbar" th:style="'width: ' + 리뷰온도 + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                <div class="mt-3">
+                    <span class="text1" th:text="'리뷰온도 ' + 리뷰온도" style="float: left;"></span>
+                    <span class="text2" th:text="'찜수 ' + 찜수" style="float: right;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>
+
+<!-- 자바스크립트 -->
+<script layout:fragment="script">
+    document.addEventListener("DOMContentLoaded", function () {
+    const resultDiv = document.getElementById("result");
+    let data = {}; // 데이터 변수 추가
+
+    // 초기 데이터 가져오기
+    async function fetchInitialData() {
+        try {
+            const response = await fetch("http://localhost/initialData");
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data); // 데이터 콘솔 출력
+                populateSidoSelect(data);
+            } else {
+                throw new Error("Network Error");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error: " + error.message);
+        }
+    }
+
+ // 시/도 선택 상자 초기화
+    function populateSidoSelect(data) {
+        const sidoSelect = document.getElementById("sido");
+        sidoSelect.innerHTML = '<option value="">선택하세요</option>';
+
+        const sortedData = Object.keys(data).sort();
+        for (const sido of sortedData) {
+            const option = document.createElement("option");
+            option.value = sido;
+            option.textContent = sido;
+            sidoSelect.appendChild(option);
+        }
+
+        // 시/도 선택 상자의 변경 이벤트에 onSidoChange 함수를 연결
+        sidoSelect.addEventListener("change", function () {
+            onSidoChange(data); // data를 매개변수로 전달
+        });
+
+        sidoSelect.dispatchEvent(new Event("change"));
+    }
+
+    // 시/도 변경 시 구군 선택 상자 업데이트
+    function onSidoChange(data) {
+        const selectedSido = this.value;
+        console.log("Sido changed:", selectedSido); // 시/도 선택 변경 콘솔 출력
+        const gugunSelect = document.getElementById("gugun");
+        const gugunArr = data[selectedSido];
+
+        gugunSelect.innerHTML = '<option value="">선택하세요</option>';
+        if (gugunArr) {
+            for (const gugun of gugunArr) {
+                const option = document.createElement("option");
+                option.value = gugun;
+                option.textContent = gugun;
+                gugunSelect.appendChild(option);
+            }
+        }
+    }
+
+    // 검색 버튼 클릭 시 실행
+    const sendButton = document.getElementById("sendButton");
+    sendButton.addEventListener("click", onSearchButtonClick);
+
+    // 검색 버튼 클릭 이벤트 핸들러
+    async function onSearchButtonClick() {
+        const selectedSido = document.getElementById("sido").value;
+        const selectedGugun = document.getElementById("gugun").value;
+        const selectedCategory = parseInt(document.getElementById("category").value);
+
+        if (!selectedSido || !selectedGugun || isNaN(selectedCategory)) {
+            resultDiv.style.display = "none";
+            alert("시도, 구군, 카테고리를 선택해주세요.");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost/main", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+                body: `sido=${selectedSido}&gugun=${selectedGugun}&hotplace_cate_no=${selectedCategory}`,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                displaySearchResults(data);
+            } else {
+                throw new Error("검색에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error: " + error.message);
+        }
+    }
+
+    // 검색 결과 표시
+    function displaySearchResults(data) {
+        resultDiv.innerHTML = "";
+
+        if (data.monthBestList.length === 0) {
+            const noDataMessage = document.createElement("p");
+            noDataMessage.textContent = "이번달에 저장된 가게가 없습니다.";
+            resultDiv.appendChild(noDataMessage);
+        } else {
+            for (let i = 0; i < data.monthBestList.length; i++) {
+                const entry = data.monthBestList[i];
+
+                const card = createCard(entry, i + 1);
+                resultDiv.appendChild(card);
+
+                if (i < data.monthBestList.length - 1) {
+                    const horizontalLine = document.createElement("hr");
+                    resultDiv.appendChild(horizontalLine);
+                }
+            }
+        }
+
+        resultDiv.style.display = "block";
+    }
+
+    // 카드 생성 함수
+    function createCard(entry, rank) {
+        const card = document.createElement("div");
+        card.className = "card p-2 mb-2";
+
+        const cardContent = document.createElement("div");
+        cardContent.className = "mt-1";
+        cardContent.style.padding = "15px";
+
+        const rankBadge = document.createElement("div");
+        rankBadge.className = "badge";
+        rankBadge.style.display = "inline-block";
+        rankBadge.style.marginRight = "10px";
+        rankBadge.textContent = "순위";
+
+        const rankSpan = document.createElement("span");
+        rankSpan.textContent = "베스트 " + rank;
+
+        rankBadge.appendChild(rankSpan);
+
+        const nameH6 = document.createElement("h5");
+        nameH6.className = "heading";
+        nameH6.style.display = "inline-block";
+        nameH6.textContent = entry.hotplace_name;
+
+        const reviewProgress = document.createElement("div");
+        reviewProgress.className = "progress";
+        reviewProgress.style.marginTop = "10px";
+
+        const reviewProgressBar = document.createElement("div");
+        reviewProgressBar.className = "progress-bar";
+        reviewProgressBar.role = "progressbar";
+        reviewProgressBar.style.width = entry.avg_emo_result + "%";
+
+        reviewProgress.appendChild(reviewProgressBar);
+
+        const reviewText1 = document.createElement("span");
+        reviewText1.className = "text1";
+        reviewText1.textContent = "리뷰 온도 " + entry.avg_emo_result + "°C";
+        reviewText1.style.float = "left";
+        reviewText1.style.marginTop = "15px";
+
+        const jjimText2 = document.createElement("span");
+        jjimText2.className = "text2";
+        jjimText2.textContent = "이번달 저장수 " + entry.jjim;
+        jjimText2.style.float = "right";
+        jjimText2.style.marginTop = "15px";
+
+        cardContent.appendChild(rankBadge);
+        cardContent.appendChild(nameH6);
+        cardContent.appendChild(reviewProgress);
+        cardContent.appendChild(reviewText1);
+        cardContent.appendChild(jjimText2);
+
+        card.appendChild(cardContent);
+
+        return card;
+    }
+
+    // 초기 데이터 가져오기 호출
+    fetchInitialData();
+});
+
+
+</script>

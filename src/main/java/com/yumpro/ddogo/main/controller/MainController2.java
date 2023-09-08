@@ -131,7 +131,7 @@ public class MainController2 {
         //}
 
         //return "main/main5";
-        return "main/test6";
+        return "main/test7";
         //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
     }
 

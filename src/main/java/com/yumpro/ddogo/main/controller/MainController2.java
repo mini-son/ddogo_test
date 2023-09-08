@@ -117,22 +117,21 @@ public class MainController2 {
             }
         }*/
 
-        /*if(hotplace_no==0){
-            return "main/test3";
-        }*/
         //후기 가져오기
-        //if(hotplace_no!=1) {
+       // if(hotplace_no!=0) {
+
             List<HashMap<String, Object>> ReviewList = mainService.getReview(hotplace_no);
             System.out.println("hotplace_no=" + hotplace_no);
             System.out.println("ReviewList=" + ReviewList);
             model.addAttribute("ReviewList", ReviewList);
+        //}
             //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
             //return String.format("redirect:/main");
             //return "/main";
         //}
 
         //return "main/main5";
-        return "main/test3";
+        return "main/test6";
         //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
     }
 

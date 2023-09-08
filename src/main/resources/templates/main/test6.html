@@ -75,14 +75,15 @@
 
 
 <!--모달창-->
-    <div class="container mt-3">
+<!--    <div class="container mt-3">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Open modal
         </button>
-    </div>
+    </div>-->
 
-    <!-- The Modal -->
-    <div class="modal" id="myModal">
+    <!-- The Modal --> <!--th:each="ReviewList: ${ReviewList}" th:if="${ReviewList != null}"-->
+    <div th:each="ReviewList: ${ReviewList}">
+    <div th:if="${ReviewList != null}" class="modal" id="myModal">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
 
@@ -94,11 +95,11 @@
 
                 <!-- Modal body -->
                 <div class="modal-body" >
-                    <div th:each="ReviewList: ${ReviewList}">
+                    <!--<div th:each="ReviewList: ${ReviewList}">-->
                         <span class="text1" th:text="${ReviewList.review}"></span>
                         <span class="text1" th:text="${ReviewList.emo_result}"></span>
                         <p/>
-                    </div>
+                    <!--</div>-->
                 </div>
 
                 <!-- Modal footer -->
@@ -108,6 +109,7 @@
 
             </div>
         </div>
+    </div>
     </div>
 
 

@@ -1,6 +1,7 @@
 package com.yumpro.ddogo.main.controller;
 
 import com.yumpro.ddogo.main.dto.BestJjimDTO;
+import com.yumpro.ddogo.main.dto.BestJjimDTO2;
 import com.yumpro.ddogo.main.service.MainService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
@@ -119,7 +120,8 @@ public class MainController2 {
 
         //후기 가져오기
        // if(hotplace_no!=0) {
-
+        BestJjimDTO2 bestJjimDTO2 = new BestJjimDTO2();
+        //bestJjimDTO2.setHotplace_no();
             List<HashMap<String, Object>> ReviewList = mainService.getReview(hotplace_no);
             System.out.println("hotplace_no=" + hotplace_no);
             System.out.println("ReviewList=" + ReviewList);

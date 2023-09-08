@@ -50,6 +50,11 @@ public class MainService{
         return mainRepository.monthBest(paramMap);
     }
 
+
+    public List<HashMap<String, Object>> getReview(int map_no) {
+        return mainRepository.getReview(map_no);
+    }
+
     /*public String getAddress(int hotplace_no){
         return mainRepository.getAddress(hotplace_no);
     }*/

@@ -63,7 +63,7 @@ public class MainController9 {
         System.out.println("sigunguMap_test3" + sigunguMap);
 
         //return "main/main5";
-        return "main/main_css_3";
+        return "main/main_css_4";
     }
 
     //리뷰 가져오기

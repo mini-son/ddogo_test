@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-6" >
         <h4 class="title" style="margin:20px;">오늘의 Best 음식점</h4>
-        <div th:each="eatjjim,  idx :${eatjjim}" class="card p-1 mb-2">
+        <div th:each="eatjjim,  idx :${eatjjimList}" class="card p-1 mb-2">
                 <div class="mt-1" style="padding: 20px;">
                     <div class="badge" style="display: inline-block; margin-right: 10px;">
                         <span th:text="'베스트 ' + (${idx.index + 1})">베스트</span>
@@ -48,7 +48,7 @@
 
     <div class="col-md-6">
         <h4 class="title" style="margin:20px;">오늘의 Best 카페</h4>
-        <div th:each="cafejjim,  idx :${cafejjim}" class="card p-2 mb-2">
+        <div th:each="cafejjim,  idx :${cafejjimList}" class="card p-2 mb-2">
                 <div class="mt-1" style="padding: 15px;">
                     <div class="badge" style="display: inline-block; margin-right: 10px;">
                         <span th:text="'베스트 ' + (${idx.index + 1})">베스트</span>
@@ -90,21 +90,21 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">후기&감정분석</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!--<button type="button" class="btn-close" data-bs-dismiss="modal"></button>-->
                     </div>
 
                     <!-- Modal body -->
                     <div class="modal-body" >
                         <!--<div th:each="ReviewList: ${ReviewList}">-->
                             <span class="text1" th:text="${ReviewList.review}"></span>
-                            <span class="text1" th:text="${ReviewList.emo_result}"></span>
+                            <span class="text1" th:text="'리뷰 온도 '+${ReviewList.emo_result}+'°C'" style="text-align: right;"></span>
                             <p/>
                         <!--</div>-->
                     </div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button id="closeModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </div>
@@ -176,36 +176,118 @@
 </html>
 
 <!-- 자바스크립트 -->
-
 <script layout:fragment="script">
+ /*   document.querySelectorAll('.heading').forEach(function (element) {
+      element.addEventListener("click", function () {
+          var hotplace_no = this.getAttribute('data-hotplace-no');
+          var url = '/review/' + hotplace_no;
 
-        document.querySelectorAll('.heading').forEach(function (element) {
-            element.addEventListener("click", function () {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-                var hotplace_no = this.getAttribute('data-hotplace-no'); // 데이터 속성에서 hotplace_no 값을 가져옵니다.
+          xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4) {
+                  if (xhr.status === 200) {
+                      var data = JSON.parse(xhr.responseText);
+
+                      if (data.length > 0) {
+                          var reviewModal = document.getElementById('myModal');
+                          var modalBody = reviewModal.querySelector('.modal-body');
+                          modalBody.innerHTML = '';
+
+                          data.forEach(function (review) {
+                              var reviewText = review.review;
+                              var emoResult = review.emo_result;
+
+                              var reviewElement = document.createElement('p');
+                              reviewElement.textContent = reviewText;
+
+                              var emoResultElement = document.createElement('p');
+                              emoResultElement.textContent = '리뷰 온도 ' + emoResult + '°C';
+
+                              modalBody.appendChild(reviewElement);
+                              modalBody.appendChild(emoResultElement);
+                          });
+
+                          reviewModal.style.display = 'block';
+                      } else {
+                          // 후기가 없는 경우 처리
+                          alert('이 장소에 대한 후기가 없습니다.');
+                      }
+                  } else {
+                      // 요청 실패 시 처리
+                      alert('요청 실패: ' + xhr.status);
+                  }
+              }
+          };
+
+          // FormData 객체를 생성하고 데이터를 추가
+          var formData = new FormData();
+          formData.append('hotplace_no', hotplace_no);
+
+          // FormData 객체를 사용하여 요청을 전송
+          xhr.send(formData);
+      });
+  });*/
+    // 모달 열기 및 데이터 가져오기
+document.querySelectorAll('.heading').forEach(function (element) {
+    element.addEventListener("click", function () {
+        var hotplace_no = this.getAttribute('data-hotplace-no');
+        var url = '/review/' + hotplace_no;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+
+                    if (data.length > 0) {
+                        var reviewModal = document.getElementById('myModal');
+                        var modalBody = reviewModal.querySelector('.modal-body');
+                        modalBody.innerHTML = '';
+
+                        data.forEach(function (reviewList) {
+                            var reviewText = reviewList.review;
+                            var emoResult = reviewList.emo_result;
+
+                            var reviewElement = document.createElement('p');
+                            reviewElement.textContent = reviewText;
+
+                            var emoResultElement = document.createElement('p');
+                            emoResultElement.textContent = '리뷰 온도 ' + emoResult + '°C';
+
+                            modalBody.appendChild(reviewElement);
+                            modalBody.appendChild(emoResultElement);
+                        });
+                        var modal = new bootstrap.Modal(document.getElementById('myModal'));
+                        modal.show();
+                        //reviewModal.style.display = 'block';
+                    } else {
+                        // 후기가 없는 경우 처리
+                        alert('이 장소에 대한 후기가 없습니다.');
+                    }
+                } else {
+                    // 요청 실패 시 처리
+                    alert('요청 실패: ' + xhr.status);
+                }
+            }
+        };
+
+        xhr.send();
+    });
+});
+
+    // 모달 닫기 버튼 클릭 시 리뷰와 감정 분석 결과 초기화
+  	document.getElementById("closeModal").addEventListener("click", function() {
+    	document.getElementById("reviewText").textContent ="";
+    	document.getElementById("emoResultText").textContent ="";
+  	});
 
 
-                // hotplace_no 값을 사용하여 URL을 생성합니다.
-                var url = '/main?hotplace_no=' + hotplace_no; // 컨트롤러 엔드포인트 URL로 변경하세요.
-
-                // 새로운 URL로 페이지를 이동합니다.
-                window.location.href = url;
-
-                // 모달 또는 다른 동작을 수행할 수 있습니다.
-                //var modal = new bootstrap.Modal(document.getElementById('myModal'));
-                //modal.show();
-                //var modalElement = document.getElementById('myModal');
-                //var modal = new bootstrap.Modal(modalElement);
-                //modal.show();
-
-
-            });
-
-        });
-
-
-        var modal = new bootstrap.Modal(document.getElementById('myModal'));
-        modal.show();
 </script>
 <script layout:fragment="script">
         document.addEventListener("DOMContentLoaded", function () {

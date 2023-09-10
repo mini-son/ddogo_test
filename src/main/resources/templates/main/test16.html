@@ -20,13 +20,13 @@
     <div class="row">
         <div class="col-md-6" >
         <h4 class="title" style="margin:20px;">오늘의 Best 음식점</h4>
-        <div th:each="eatjjim,  idx :${eatjjim}" class="card p-1 mb-2">
+        <div th:each="eatjjim,  idx :${eatjjimList}" class="card p-1 mb-2">
                 <div class="mt-1" style="padding: 20px;">
                     <div class="badge" style="display: inline-block; margin-right: 10px;">
                         <span th:text="'베스트 ' + (${idx.index + 1})">베스트</span>
                     </div>
                     <h5 class="heading" th:text="${eatjjim.hotplace_name}" style="display: inline-block;"
-                        data-bs-toggle="modal" data-bs-target="#myModal"  th:data-hotplace-no="${eatjjim.hotplace_no}"></h5>
+                        data-toggle="modal" data-target="#myModal"  th:data-hotplace-no="${eatjjim.hotplace_no}"></h5>
                          <!--뭔가 클릭하고 싶게끔 바꾸기-->
                     <div class="ms-2 c-details">
                         <span class="mb-0" th:text="${eatjjim.address}"></span>
@@ -48,7 +48,7 @@
 
     <div class="col-md-6">
         <h4 class="title" style="margin:20px;">오늘의 Best 카페</h4>
-        <div th:each="cafejjim,  idx :${cafejjim}" class="card p-2 mb-2">
+        <div th:each="cafejjim,  idx :${cafejjimList}" class="card p-2 mb-2">
                 <div class="mt-1" style="padding: 15px;">
                     <div class="badge" style="display: inline-block; margin-right: 10px;">
                         <span th:text="'베스트 ' + (${idx.index + 1})">베스트</span>
@@ -90,21 +90,21 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">후기&감정분석</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!--<button type="button" class="btn-close" data-bs-dismiss="modal"></button>-->
                     </div>
 
                     <!-- Modal body -->
                     <div class="modal-body" >
-                        <!--<div th:each="ReviewList: ${ReviewList}">-->
+                        <div th:each="ReviewList: ${ReviewList}"
                             <span class="text1" th:text="${ReviewList.review}"></span>
-                            <span class="text1" th:text="${ReviewList.emo_result}"></span>
+                            <span class="text1" th:text="'리뷰 온도 '+${ReviewList.emo_result}+'°C'" style="text-align: right;"></span>
                             <p/>
-                        <!--</div>-->
+                        </div>
                     </div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button id="closeModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </div>
@@ -176,36 +176,61 @@
 </html>
 
 <!-- 자바스크립트 -->
-
 <script layout:fragment="script">
+    document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.heading').forEach(function (element) {
+        element.addEventListener("click", function () {
+            var hotplace_no = this.getAttribute('data-hotplace-no');
+            var url = '/review/' + hotplace_no;
 
-        document.querySelectorAll('.heading').forEach(function (element) {
-            element.addEventListener("click", function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
 
-                var hotplace_no = this.getAttribute('data-hotplace-no'); // 데이터 속성에서 hotplace_no 값을 가져옵니다.
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
 
+                        if (data.length > 0) {
+                            var reviewModalElm = document.getElementById('myModal');
+                            if(reviewModalElm != null){
+                                let modalBody = reviewModalElm.querySelector('.modal-body');
+                                modalBody.innerHTML = '';
 
-                // hotplace_no 값을 사용하여 URL을 생성합니다.
-                var url = '/main?hotplace_no=' + hotplace_no; // 컨트롤러 엔드포인트 URL로 변경하세요.
+                                data.forEach(function (reviewList) {
+                                    let reviewTextElement=document.createElement('p');
+                                    reviewTextElement.textContent=reviewList.review;
+                                    let emoResultElement=document.createElement('p');
+                                    emoResultElement.textContent='리뷰 온도 ' + reviewList.emo_result + '°C';
 
-                // 새로운 URL로 페이지를 이동합니다.
-                window.location.href = url;
+                                    modalBody.appendChild(reviewTextElement);
+                                    modalBody.appendChild(emoResultElement);
+                                });
 
-                // 모달 또는 다른 동작을 수행할 수 있습니다.
-                //var modal = new bootstrap.Modal(document.getElementById('myModal'));
-                //modal.show();
-                //var modalElement = document.getElementById('myModal');
-                //var modal = new bootstrap.Modal(modalElement);
-                //modal.show();
+                                // AJAX 요청이 성공적으로 완료된 후에만 모달 창 열기
+                                 let myModal=bootstrap.Modal.getInstance(reviewModalElm);
+                                 if(!myModal){
+                                     myModal=new bootstrap.Modal(reviewModalElm);
+                                 }
+                                 myModal.show();
+                            }
 
+                        } else { // 후기가 없는 경우 처리
+                            alert('이 장소에 대한 후기가 없습니다.');
+                        }
+                    } else { // 요청 실패 시 처리
+                        alert('요청 실패: ' + xhr.status);
+                    }
+                }
+            };
 
-            });
-
+            xhr.send();
         });
+    });
+});
 
 
-        var modal = new bootstrap.Modal(document.getElementById('myModal'));
-        modal.show();
 </script>
 <script layout:fragment="script">
         document.addEventListener("DOMContentLoaded", function () {

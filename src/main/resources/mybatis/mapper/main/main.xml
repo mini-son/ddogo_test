@@ -115,7 +115,7 @@
 		]]>
     </select>
 
-    <select id="getReview" resultType="hashmap" parameterType="int">
+    <select id="getReview" parameterType="int" resultType="hashmap">
         <![CDATA[
 		select review,emo_result
         from ddogo.emoreview

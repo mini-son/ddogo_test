@@ -1,7 +1,5 @@
 package com.yumpro.ddogo.main.controller;
 
-import com.yumpro.ddogo.main.dto.BestJjimDTO;
-import com.yumpro.ddogo.main.dto.BestJjimDTO2;
 import com.yumpro.ddogo.main.service.MainService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
@@ -22,51 +20,24 @@ import java.util.Map;
 
 @SpringBootApplication
 @Controller
-public class MainController2 {
- /*   @Autowired
+public class MainController8 {
+  /*  @Autowired
     private MainService mainService;
-
-    @RequestMapping("test")
-    public String mapno() throws Exception {
-
-        int mapno = mainService.mapno();
-
-        System.out.println("mapno="+mapno);
-        return "main/footer3";
-    }
-
-    //오늘 전국 베스트 찜
-    @RequestMapping("allBestJjim")
-    public String allBestJjim(Model model) throws Exception {
-        //맛집
-        List<HashMap<String, Object>> eatjjim = mainService.eatjjim();
-        //카페
-        List<HashMap<String, Object>> cafejjim = mainService.cafejjim();
-        System.out.println("eatjjim"+eatjjim);
-        System.out.println("cafejjim"+cafejjim);
-
-        model.addAttribute("cafejjim",cafejjim);
-        model.addAttribute("eatjjim",eatjjim);
-        return "main/main";
-    }
-
-
 
 
     //---------------한번에 main.html-------------------
     //오늘 전국 베스트 찜
     @GetMapping(value = "main")
     public String main(HttpServletResponse response,
-                       @RequestParam(name = "hotplace_no", defaultValue = "0") int hotplace_no,
                        Model model) throws Exception {
         //일별 베스트
-        List<HashMap<String, Object>> eatjjim = mainService.eatjjim(); //맛집
-        List<HashMap<String, Object>> cafejjim = mainService.cafejjim(); //카페
-        System.out.println("eatjjim"+eatjjim);
-        System.out.println("cafejjim"+cafejjim);
+        List<HashMap<String, Object>> eatjjimList = mainService.eatjjim(); //맛집
+        List<HashMap<String, Object>> cafejjimList = mainService.cafejjim(); //카페
+        System.out.println("eatjjimList="+eatjjimList);
+        System.out.println("cafejjimList="+cafejjimList);
 
-        model.addAttribute("cafejjim",cafejjim);
-        model.addAttribute("eatjjim",eatjjim);
+        model.addAttribute("cafejjimList",cafejjimList);
+        model.addAttribute("eatjjimList",eatjjimList);
 
         //월별베스트
         Map<String, List<String>> sigunguMap = mainService.getsidogungu();
@@ -74,7 +45,7 @@ public class MainController2 {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        for (String sidoKey : sigunguMap.keySet()) { //map의 key의 개수만큼=<=(중복되지않는)sido의 개수만큼
+        for (String sidoKey : sigunguMap.keySet()) { //map의 key의 개수만큼<=(중복되지않는)sido의 개수만큼
             List<String> sigunguList = sigunguMap.get(sidoKey);
             JSONArray jsonArr = new JSONArray(); //배열준비
             System.out.printf("시도별%s 시군구개수%d \r\n", sidoKey, sigunguList.size());
@@ -85,56 +56,21 @@ public class MainController2 {
         }
 
         String jsonStr = obj.toString();
-        System.out.println("jsonStr =" + jsonStr); //콘솔출력.확인용
+        System.out.println("jsonStr =" + jsonStr);
         //out.print(jsonStr); //client로 보내기
         model.addAttribute(jsonStr);
         model.addAttribute("sigunguMap", sigunguMap);
-        System.out.println("sigunguMap_test3" + sigunguMap);
 
 
-       /* for (HashMap<String, Object> dto : eatjjim) {
-            int map_no = dto.getMap_no();
-            //후기 가져오기
-            List<HashMap<String, Object>> ReviewList = mainService.getReview(map_no);
-            System.out.println("ReviewList="+ReviewList);
-            model.addAttribute("ReviewList");
-        }*/
 
-       /* for (HashMap<String, Object> dto : eatjjim) {
-            int mapNo = dto.getMap_no();
-            // mapNo를 이용하여 원하는 작업을 수행하거나 모델에 추가할 수 있습니다.
-        }*/
-
-       /* for (HashMap<String, Object> dto : eatjjim) {
-            Object mapNoObj = dto.get("map_no");
-            if (mapNoObj != null && mapNoObj instanceof Integer) {
-                int map_no = (Integer) mapNoObj;
-                //후기 가져오기
-                List<HashMap<String, Object>> ReviewList = mainService.getReview(map_no);
-                System.out.println("ReviewList="+ReviewList);
-                model.addAttribute("ReviewList",ReviewList);
-            }
-        }*/
-
-   /*     //후기 가져오기
-       // if(hotplace_no!=0) {
-        //BestJjimDTO2 bestJjimDTO2 = new BestJjimDTO2();
-        //bestJjimDTO2.setHotplace_no();
-            List<HashMap<String, Object>> ReviewList = mainService.getReview(hotplace_no);
+        //후기 가져오기
+        /*    List<HashMap<String, Object>> ReviewList = mainService.getReview(hotplace_no);
             System.out.println("hotplace_no=" + hotplace_no);
             System.out.println("ReviewList=" + ReviewList);
-            model.addAttribute("ReviewList", ReviewList);
-        //}
-            //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
-            //return String.format("redirect:/main");
-            //return "/main";
-        //}
+            model.addAttribute("ReviewList", ReviewList);*/
 
-        //return "main/main5";
-        return "main/test7";
-        //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
+    /*    return "main/test16";
     }
-
 
 
     // 초기 데이터를 가져오는 엔드포인트
@@ -145,7 +81,6 @@ public class MainController2 {
         Map<String, List<String>> sigunguMap = mainService.getsidogungu();
         return sigunguMap;
     }
-
 
 
     @PostMapping(value = "main", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -171,10 +106,19 @@ public class MainController2 {
         model.addAttribute("monthBestList", monthBestList);
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
-    }*/
+    }
 
 
-
-
+ @GetMapping(value = "review/{hotplace_no}", produces = MediaType.APPLICATION_JSON_VALUE)
+ @ResponseBody
+ public ResponseEntity<List<HashMap<String, Object>>> getReviews(
+         @PathVariable int hotplace_no,
+         Model model) throws Exception {
+     List<HashMap<String, Object>> reviewList = mainService.getReview(hotplace_no);
+     System.out.println("hotplace_no="+hotplace_no);
+     System.out.println("reviewList="+reviewList);
+     model.addAttribute("reviewList", reviewList);
+     return new ResponseEntity<>(reviewList, HttpStatus.OK);
+ }*/
 
 }

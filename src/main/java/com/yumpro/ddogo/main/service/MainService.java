@@ -1,6 +1,7 @@
 package com.yumpro.ddogo.main.service;
 
 import com.yumpro.ddogo.main.dto.BestJjimDTO2;
+import com.yumpro.ddogo.main.dto.ReviewDTO;
 import com.yumpro.ddogo.main.dto.SidogugunDTO;
 import com.yumpro.ddogo.main.repository.MainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,12 @@ public class MainService{
     }
 
     public List<HashMap<String, Object>> eatjjim() throws Exception{
+        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim();
       /*  BestJjimDTO2 bestJjimDTO2 = new BestJjimDTO2();
         bestJjimDTO2.setHotplace_no();
         List<HashMap<String, Object>> ReviewList = mainService.getReview(hotplace_no);*/
 
-        List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim();
+      /*  List<HashMap<String, Object>> eatjjimList = mainRepository.eatjjim();
         for(int i=0; i<eatjjimList.size(); i++){
             HashMap<String, Object> hm= eatjjimList.get(i);
 
@@ -33,14 +35,14 @@ public class MainService{
                 String key =(String)iter.next();
                 Object value =hm.get(key);
                 System.out.println(key+"의 값은 "+value);
-            }
+            }*/
 
-           int hotplace_no = (Integer) hm.get("hotplace_no");
+           //int hotplace_no = (Integer) hm.get("hotplace_no");
            // BestJjimDTO2 bestJjimDTO2 = new BestJjimDTO2();
            // bestJjimDTO2.setHotplace_no(hotplace_no);
            // bestJjimDTO2.setHotplace_name((String)hm.get("hotplace_name"));
            // bestJjimDTO2.setReviewList(hm.);
-        }
+        //}
 
         return eatjjimList;
     }
@@ -75,6 +77,11 @@ public class MainService{
     public List<HashMap<String, Object>> getReview(int map_no) {
         return mainRepository.getReview(map_no);
     }
+
+    /*public ReviewDTO getReview(int map_no) {
+        return mainRepository.getReview(map_no);
+    }*/
+
 
     /*public String getAddress(int hotplace_no){
         return mainRepository.getAddress(hotplace_no);

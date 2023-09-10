@@ -1,7 +1,5 @@
 package com.yumpro.ddogo.main.controller;
 
-import com.yumpro.ddogo.main.dto.BestJjimDTO;
-import com.yumpro.ddogo.main.dto.BestJjimDTO2;
 import com.yumpro.ddogo.main.service.MainService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
@@ -22,46 +20,19 @@ import java.util.Map;
 
 @SpringBootApplication
 @Controller
-public class MainController2 {
- /*   @Autowired
+public class MainController9 {
+    @Autowired
     private MainService mainService;
-
-    @RequestMapping("test")
-    public String mapno() throws Exception {
-
-        int mapno = mainService.mapno();
-
-        System.out.println("mapno="+mapno);
-        return "main/footer3";
-    }
-
-    //오늘 전국 베스트 찜
-    @RequestMapping("allBestJjim")
-    public String allBestJjim(Model model) throws Exception {
-        //맛집
-        List<HashMap<String, Object>> eatjjim = mainService.eatjjim();
-        //카페
-        List<HashMap<String, Object>> cafejjim = mainService.cafejjim();
-        System.out.println("eatjjim"+eatjjim);
-        System.out.println("cafejjim"+cafejjim);
-
-        model.addAttribute("cafejjim",cafejjim);
-        model.addAttribute("eatjjim",eatjjim);
-        return "main/main";
-    }
-
-
-
 
     //---------------한번에 main.html-------------------
     //오늘 전국 베스트 찜
     @GetMapping(value = "main")
-    public String main(HttpServletResponse response,
-                       @RequestParam(name = "hotplace_no", defaultValue = "0") int hotplace_no,
-                       Model model) throws Exception {
+    public String main(HttpServletResponse response,Model model) throws Exception {
         //일별 베스트
-        List<HashMap<String, Object>> eatjjim = mainService.eatjjim(); //맛집
-        List<HashMap<String, Object>> cafejjim = mainService.cafejjim(); //카페
+        //맛집
+        List<HashMap<String, Object>> eatjjim = mainService.eatjjim();
+        //카페
+        List<HashMap<String, Object>> cafejjim = mainService.cafejjim();
         System.out.println("eatjjim"+eatjjim);
         System.out.println("cafejjim"+cafejjim);
 
@@ -87,52 +58,24 @@ public class MainController2 {
         String jsonStr = obj.toString();
         System.out.println("jsonStr =" + jsonStr); //콘솔출력.확인용
         //out.print(jsonStr); //client로 보내기
-        model.addAttribute(jsonStr);
+        model.addAttribute("jsonStr"+jsonStr);
         model.addAttribute("sigunguMap", sigunguMap);
         System.out.println("sigunguMap_test3" + sigunguMap);
 
-
-       /* for (HashMap<String, Object> dto : eatjjim) {
-            int map_no = dto.getMap_no();
-            //후기 가져오기
-            List<HashMap<String, Object>> ReviewList = mainService.getReview(map_no);
-            System.out.println("ReviewList="+ReviewList);
-            model.addAttribute("ReviewList");
-        }*/
-
-       /* for (HashMap<String, Object> dto : eatjjim) {
-            int mapNo = dto.getMap_no();
-            // mapNo를 이용하여 원하는 작업을 수행하거나 모델에 추가할 수 있습니다.
-        }*/
-
-       /* for (HashMap<String, Object> dto : eatjjim) {
-            Object mapNoObj = dto.get("map_no");
-            if (mapNoObj != null && mapNoObj instanceof Integer) {
-                int map_no = (Integer) mapNoObj;
-                //후기 가져오기
-                List<HashMap<String, Object>> ReviewList = mainService.getReview(map_no);
-                System.out.println("ReviewList="+ReviewList);
-                model.addAttribute("ReviewList",ReviewList);
-            }
-        }*/
-
-   /*     //후기 가져오기
-       // if(hotplace_no!=0) {
-        //BestJjimDTO2 bestJjimDTO2 = new BestJjimDTO2();
-        //bestJjimDTO2.setHotplace_no();
-            List<HashMap<String, Object>> ReviewList = mainService.getReview(hotplace_no);
-            System.out.println("hotplace_no=" + hotplace_no);
-            System.out.println("ReviewList=" + ReviewList);
-            model.addAttribute("ReviewList", ReviewList);
-        //}
-            //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
-            //return String.format("redirect:/main");
-            //return "/main";
-        //}
-
         //return "main/main5";
-        return "main/test7";
-        //return String.format("redirect:/main?hotplace_no=%d",hotplace_no);
+        return "main/main_css_3";
+    }
+
+    //리뷰 가져오기
+    @GetMapping(value = "/review/{hotplace_no}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<HashMap<String, Object>> getReview(@PathVariable("hotplace_no") int hotplace_no,
+    Model model) {
+        System.out.println("컨트롤러getReview진입");
+        List<HashMap<String, Object>> reviewList = mainService.getReview(hotplace_no);
+        System.out.println("reviewList="+reviewList);
+        model.addAttribute("reviewList",reviewList);
+        return reviewList;
     }
 
 
@@ -171,7 +114,7 @@ public class MainController2 {
         model.addAttribute("monthBestList", monthBestList);
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
-    }*/
+    }
 
 
 

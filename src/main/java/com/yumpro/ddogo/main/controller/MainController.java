@@ -30,7 +30,7 @@ import java.util.Map;
 @SpringBootApplication
 @Controller
 public class MainController {
- /*   @Autowired
+  /*  @Autowired
     private MainService mainService;
 
     @RequestMapping("test")
@@ -136,8 +136,8 @@ public class MainController {
         model.addAttribute("monthBestList", monthBestList);
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
-    }
-*/
+    }*/
+
 
 
 

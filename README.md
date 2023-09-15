@@ -1,3 +1,1 @@
-#ddogo_test_git
-
-Ddogo Project Test
+Ddogo Project Test Git
